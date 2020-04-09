@@ -1,0 +1,816 @@
+%YAML 1.2
+---
+name: MCore
+file_extensions:
+  - mc
+scope: source.mcore
+
+variables:
+  builtin_ident: '(?:unit|not|and|or|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|makeseq|length|concat|nth|cons|slice|reverse|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
+  reserved_ident: '(?:if|then|else|let|match|with|lang|con|use|in|case|utest|lam)'
+  type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
+  ident: '(?:[a-zA-Z_][a-zA-Z_0-9]*)'
+  escapechar: '(?:\\(?:[?abfnrtv"\\]|''))'
+
+# Context parsing
+contexts:
+  main:
+    - include: comment
+    - include: lang
+    - include: mexpr
+
+  main-pushed:
+    - include: comment
+    - include: lang-pushed
+    - include: mexpr-pushed
+
+  mexpr:
+    - include: mexprexpr
+    - include: let
+    - include: ifexpr
+    - include: matchexpr
+    - include: recursive
+    - include: lam
+    - include: use
+    - include: typeexpr
+    - include: con
+    - include: utest
+    - include: includeexpr
+    - include: constant
+    - include: parenthesis
+    - include: record
+    - include: identifier
+
+  mexpr-pushed:
+    - include: mexprexpr-pushed
+    - include: let-pushed
+    - include: ifexpr-pushed
+    - include: matchexpr-pushed
+    - include: recursive-pushed
+    - include: lam-pushed
+    - include: typeexpr-pushed
+    - include: con-pushed
+    - include: use-pushed
+    - include: utest-pushed
+    - include: includeexpr-pushed
+    - include: constant-pushed
+    - include: parenthesis-pushed
+    - include: record-pushed
+    - include: identifier-pushed
+
+  constant:
+    - include: float
+    - include: integer
+    - include: boolean
+    - include: string
+    - include: character
+    - include: unit-constant
+
+  constant-pushed:
+    - include: float-pushed
+    - include: integer-pushed
+    - include: boolean-pushed
+    - include: string-pushed
+    - include: character-pushed
+    - include: unit-constant-pushed
+
+  # Comments
+  comment:
+    - match: '(--|//)'
+      scope: comment.line.mcore
+      push:
+        - match: '\n'
+          scope: comment.line.mcore
+          pop: true
+        - include: comment-line-content
+
+  comment-line-content:
+    - match: '\s*([Tt][Oo][Dd][Oo])(:)?'
+      scope: comment.keyword.todo.mcore
+    - match: '.*'
+      scope: comment.line.mcore
+
+  # Lang statements
+  lang:
+    - match: '\b(lang)\b'
+      scope: keyword.other.lang.mcore
+      push: [lang-init, identifier-pushed]
+
+  lang-pushed:
+    - match: '\b(lang)\b'
+      scope: keyword.other.lang.mcore
+      set: [lang-init, identifier-pushed]
+
+  lang-init:
+    # Check what comes after 'lang'
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [lang-eqexpr, identifier-pushed]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: main-pushed
+
+  lang-eqexpr:
+      # lang X = ...
+    - match: '(\+)'
+      scope: keyword.operator.combine.mcore
+      set: [lang-eqexpr, identifier-pushed]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: main-pushed
+
+  lang-syninit:
+      # syn X = ...
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [lang-synbody]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - include: comment
+    - include: identifier
+  lang-synbody:
+    - match: '(\|)'
+      scope: keyword.operator.case.mcore
+      set: [lang-synbody]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: comment
+    - include: type-identifier
+
+  lang-seminit:
+      # sem X (x : T) = ...
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [lang-sembody]
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [lang-seminit, type-specified-indentifier-startrparen-pushed, identifier-pushed]
+    - include: comment
+  lang-sembody:
+    - match: '(\|)'
+      scope: keyword.operator.case.mcore
+      set: [lang-sembody-continued, lang-semarrow-pushed]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: comment
+
+  lang-sembody-continued:
+    - match: '(\|)'
+      scope: keyword.operator.case.mcore
+      set: [lang-sembody-continued, lang-semarrow-pushed]
+    - match: '\b(syn)\b'
+      scope: keyword.directive.syn.mcore
+      set: [lang-syninit, identifier-pushed]
+    - match: '\b(sem)\b'
+      scope: keyword.directive.sem.mcore
+      set: [lang-seminit, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: main
+
+  lang-semarrow-pushed:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      pop: true
+    - include: comment
+
+  ## MEXPR-EXPRESSION
+  mexprexpr:
+    - match: '\b(mexpr)\b'
+      scope: keyword.directive.mexpr.mcore
+
+  mexprexpr-pushed:
+    - match: '\b(mexpr)\b'
+      scope: keyword.directive.mexpr.mcore
+      pop: true
+    - include: comment
+
+  ## LET-EXPRESSION ##
+  let:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      push: [let-in-pushed, type-specified-indentifier-startassign-pushed, identifier-pushed]
+
+  let-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      set: [let-in-pushed, type-specified-indentifier-startassign-pushed, identifier-pushed]
+    - include: comment
+
+  let-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: main
+
+  let-chain-in-or-end-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      set: [let-chain-in-or-end-terminator-pushed, type-specified-indentifier-startassign-pushed, identifier-pushed]
+    - include: comment
+
+  let-chain-in-or-end-terminator-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcoreend
+      set: [let-chain-in-or-end-terminator-pushed, type-specified-indentifier-startassign-pushed, identifier-pushed]
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+    - include: main
+
+  ## RECURSIVE-EXPRESSION ##
+  recursive:
+    - match: '\b(recursive)\b'
+      scope: keyword.other.recursive.mcore
+      push: [let-chain-in-or-end-pushed]
+
+  recursive-pushed:
+    - match: '\b(recursive)\b'
+      scope: keyword.other.recursive.mcore
+      set: [let-chain-in-or-end-pushed]
+    - include: comment
+
+  ## TYPE-EXPRESSION ##
+  typeexpr:
+    - match: '\b(type)\b'
+      scope: keyword.other.type.mcore
+      #push: [type-specified-indentifier-startin-optional-pushed, identifier-pushed]
+      push: [typeexpr-init-pushed, identifier-pushed]
+
+  typeexpr-pushed:
+    - match: '\b(type)\b'
+      scope: keyword.other.type.mcore
+      #set: [type-specified-indentifier-startin-optional-pushed, identifier-pushed]
+      set: [typeexpr-init-pushed, identifier-pushed]
+    - include: comment
+
+  typeexpr-init-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [typeexpr-in-pushed, type-identifier-pushed]
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: main-pushed
+
+  typeexpr-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: main-pushed # This allows the 'in' to be optional
+
+  ## CON-EXPRESSION ##
+  con:
+    - match: '\b(con)\b'
+      scope: keyword.other.con.mcore
+      push: [type-specified-indentifier-startin-optional-pushed, identifier-pushed]
+      #push: [con-in-pushed, indentifier-pushed]
+
+  con-pushed:
+    - match: '\b(con)\b'
+      scope: keyword.other.con.mcore
+      set: [type-specified-indentifier-startin-optional-pushed, identifier-pushed]
+      #set: [con-in-pushed, indentifier-pushed]
+    - include: comment
+
+  con-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: main-pushed # This allows the 'in' to be optional
+
+  ## USE-EXPRESSION ##
+  use:
+    - match: '\b(use)\b'
+      scope: keyword.other.use.mcore
+      push: [use-in-pushed, identifier-pushed]
+
+  use-pushed:
+    - match: '\b(use)\b'
+      scope: keyword.other.use.mcore
+      set: [use-in-pushed, identifier-pushed]
+    - include: comment
+
+  use-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: comment
+
+  ## UTEST-EXPRESSION ##
+  utest:
+    - match: '\b(utest)\b'
+      scope: keyword.other.utest.mcore
+      push: [utest-in-pushed, utest-with-pushed]
+
+  utest-pushed:
+    - match: '\b(utest)\b'
+      scope: keyword.other.utest.mcore
+      set: [utest-in-pushed, utest-with-pushed]
+    - include: comment
+
+  utest-with-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.directive.with.mcore
+      pop: true
+    - include: main
+
+  utest-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - include: main
+
+  ## LAMBDA-EXPRESSION ##
+  lam:
+    - match: '\b(lam)\b'
+      scope: keyword.operator.lam.mcore
+      push: [type-specified-indentifier-startdot-pushed, identifier-pushed]
+      #push: [lam-dot-pushed, identifier-pushed]
+
+  lam-pushed:
+    - match: '\b(lam)\b'
+      scope: keyword.operator.lam.mcore
+      set: [type-specified-indentifier-startdot-pushed, identifier-pushed]
+      #set: [lam-dot-pushed, identifier-pushed]
+    - include: comment
+
+  lam-dot-pushed:
+    - match: '[.]'
+      scope: keyword.operator.lamdot.mcore
+      pop: true
+    - include: comment
+
+  ## IF-THEN-ELSE-EXPRESSION ##
+  ifexpr:
+    - match: '\b(if)\b'
+      scope: keyword.control.if.mcore
+      push: [ifexpr-else-pushed, ifexpr-then-pushed]
+
+  ifexpr-pushed:
+    - match: '\b(if)\b'
+      scope: keyword.control.if.mcore
+      set: [ifexpr-else-pushed, ifexpr-then-pushed]
+    - include: comment
+
+  ifexpr-then-pushed:
+    - match: '\b(then)\b'
+      scope: keyword.control.then.mcore
+      pop: true
+    - include: main
+
+  ifexpr-else-pushed:
+    - match: '\b(else)\b'
+      scope: keyword.control.else.mcore
+      set: [main-pushed]
+    - include: main
+
+  ## MATCH-EXPRESSION ##
+  matchexpr:
+    - match: '\b(match)\b'
+      scope: keyword.control.match.mcore
+      push: [matchexpr-else-pushed, matchexpr-then-pushed, matchexpr-with-pushed, identifier-pushed]
+
+  matchexpr-pushed:
+    - match: '\b(match)\b'
+      scope: keyword.control.match.mcore
+      set: [matchexpr-else-pushed, matchexpr-then-pushed, matchexpr-with-pushed, identifier-pushed]
+    - include: comment
+
+  matchexpr-with-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.control.with.mcore
+      pop: true
+    - include: comment
+
+  matchexpr-then-pushed:
+    - match: '\b(then)\b'
+      scope: keyword.control.then.mcore
+      pop: true
+    - include: main
+
+  matchexpr-else-pushed:
+    - match: '\b(else)\b'
+      scope: keyword.control.else.mcore
+      pop: true
+    - include: main
+
+  ## INCLUDE-EXPRESSION ##
+  includeexpr:
+    - match: '\b(include)\b'
+      scope: keyword.control.include.mcore
+      push: [string-pushed]
+
+  includeexpr-pushed:
+    - match: '\b(include)\b'
+      scope: keyword.control.include.mcore
+      set: [string-pushed]
+    - include: comment
+
+  ## IDENTIFIER-EXPRESSION ##
+  identifier:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+
+  identifier-pushed:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      pop: true
+    - include: comment
+
+  ## TYPE-IDENTIFIER-EXPRESSION ##
+  type-identifier:
+    - match: '\['
+      push: [type-identifier-rbracket-pushed, type-identifier-pushed]
+    - match: '\('
+      push: [type-identifier-tuple-pushed]
+    - match: '\{'
+      push: [type-identifier-record-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+
+  type-identifier-pushed:
+    - match: '\['
+      set: [type-identifier-rbracket-pushed, type-identifier-pushed]
+    - match: '\('
+      set: [type-identifier-tuple-pushed]
+    - match: '\{'
+      set: [type-identifier-record-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+      pop: true
+    - include: comment
+
+  type-identifier-tuple-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '\['
+      set: [type-identifier-rparen-pushed, type-identifier-rbracket-pushed, type-identifier-pushed]
+    - match: '\('
+      set: [type-identifier-rparen-pushed, type-identifier-tuple-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+      set: [type-identifier-rparen-pushed]
+    - include: comment
+
+  type-identifier-rbracket-pushed:
+    - match: '\]'
+      pop: true
+    - include: comment
+
+  type-identifier-rparen-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [type-identifier-rparen-pushed, type-identifier-pushed]
+    - include: comment
+
+  type-identifier-record-pushed:
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [type-identifier-record-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+      set: [type-identifier-record-pushed, type-identifier-pushed, type-identifier-record-colon-pushed]
+    - include: comment
+
+  type-identifier-record-colon-pushed:
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      pop: true
+    - include: comment
+
+  ## TYPE-SPECIFIED-INDENTIFIER (terminated by an 'in') ##
+  type-specified-indentifier-startin-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      set: [type-specified-indentifier-endin-pushed, type-identifier-pushed]
+    - include: comment
+
+  type-specified-indentifier-endin-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [type-specified-indentifier-endin-pushed, type-identifier-pushed]
+    - include: comment
+
+  # Optional 'in' after the identifier
+  type-specified-indentifier-startin-optional-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      set: [type-specified-indentifier-endin-optional-pushed, type-identifier-pushed]
+    - include: main-pushed
+
+  type-specified-indentifier-endin-optional-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.directive.in.mcore
+      pop: true
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [type-specified-indentifier-endin-optional-pushed, type-identifier-pushed]
+    - include: main-pushed
+
+  ## TYPE-SPECIFIED-INDENTIFIER (terminated by a '=') ##
+  type-specified-indentifier-startassign-pushed:
+    - match: '[=]'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      set: [type-specified-indentifier-endassign-pushed, type-identifier-pushed]
+    - include: comment
+
+  type-specified-indentifier-endassign-pushed:
+    - match: '[=]'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [type-specified-indentifier-endassign-pushed, type-identifier-pushed]
+    - include: comment
+
+  ## TYPE-SPECIFIED-INDENTIFIER (terminated by a '.') ##
+  type-specified-indentifier-startdot-pushed:
+    - match: '[.]'
+      scope: keyword.operator.lamdot.mcore
+      pop: true
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      set: [type-specified-indentifier-enddot-pushed, type-identifier-pushed]
+    - include: comment
+
+  type-specified-indentifier-enddot-pushed:
+    - match: '[.]'
+      scope: keyword.operator.lamdot.mcore
+      pop: true
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [type-specified-indentifier-enddot-pushed, type-identifier-pushed]
+    - include: comment
+
+  ## TYPE-SPECIFIED-INDENTIFIER (terminated by a ')') ##
+  type-specified-indentifier-startrparen-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '[:]'
+      scope: keyword.operator.colon.mcore
+      set: [type-specified-indentifier-endrparen-pushed, type-identifier-pushed]
+    - include: comment
+
+  type-specified-indentifier-endrparen-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [type-specified-indentifier-endrparen-pushed, type-identifier-pushed]
+    - include: comment
+
+  ## PARENTHESIS-EXPRESSIONS ##
+  parenthesis:
+    - include: lparen
+    - include: rparen-illegal
+
+  parenthesis-pushed:
+    - include: lparen-pushed
+    - include: rparen-illegal-pushed
+
+  lparen:
+    - match: '\('
+      scope: symbol.lparen.mcore
+      push: [rparen-pushed]
+
+  rparen-illegal:
+    - match: '\)'
+      scope: invalid.illegal.rparen.mcore
+
+  lparen-pushed:
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [rparen-pushed]
+    - include: comment
+
+  rparen-illegal-pushed:
+    - match: '\)'
+      scope: invalid.illegal.rparen.mcore
+      pop: true
+    - include: comment
+
+  rparen-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - include: main
+
+  ## RECORD-EXPRESSIONS ##
+  record:
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      push: [record-start-pushed]
+
+  record-pushed:
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [record-start-pushed]
+
+  record-start-pushed:
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [record-with-or-eq-pushed, record-start-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+      set: [record-with-or-eq-pushed]
+    - include: comment
+
+  record-with-or-eq-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.directive.with.mcore
+      set: [record-comma-or-end-pushed, op-assignment-pushed, identifier-pushed]
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [record-comma-or-end-pushed]
+    - include: comment
+
+  record-comma-or-end-pushed:
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [record-comma-or-end-pushed, op-assignment-pushed, identifier-pushed]
+    - include: mexpr
+    - include: comment
+
+  ## CONSTANT-EXPRESSIONS ##
+  integer:
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+
+  integer-pushed:
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      pop: true
+    - include: comment
+
+  float:
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+    - match: '(-)?[0-9][.][0-9]+'
+      scope: constant.numeric.float.normal.mcore
+
+  float-pushed:
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      pop: true
+    - match: '(-)?[0-9][.][0-9]+'
+      scope: constant.numeric.float.normal.mcore
+      pop: true
+    - include: comment
+
+  boolean:
+    - match: '(true|false)'
+      scope: constant.language.mcore
+
+  boolean-pushed:
+    - match: '(true|false)'
+      scope: constant.language.mcore
+      pop: true
+    - include: comment
+
+  unit-constant:
+    - match: '[(][)]'
+      scope: constant.language.mcore
+
+  unit-constant-pushed:
+    - match: '[(][)]'
+      scope: constant.language.mcore
+      pop: true
+    - include: comment
+
+  string:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      push:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+
+  string-pushed:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+    - include: comment
+
+  stringsymbol:
+    - match: '{{escapechar}}'
+      scope: constant.character.escape.mcore
+    - match: '[^"\\]'
+      scope: string.character.mcore
+
+  character:
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+
+  ## OPERATOR-EXPRESSIONS ##
+  op-assignment-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+    - include: comment
