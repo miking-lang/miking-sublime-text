@@ -1,0 +1,8 @@
+%YAML 1.2
+#%%ARGS=(ContinuationCase)
+- match: '(\|)'
+  scope: keyword.operator.or.mcore
+  set: [%%%USEARG=ContinuationCase]
+- match: '(\&)'
+  scope: keyword.operator.and.mcore
+  set: [%%%USEARG=ContinuationCase]

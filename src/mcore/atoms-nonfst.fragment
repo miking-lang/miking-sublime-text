@@ -1,0 +1,5 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '[.]'
+  scope: symbol.dot.mcore
+  set: [%%%USEARG=PopType, record-proj-label-pushed]
