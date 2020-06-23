@@ -12,7 +12,7 @@ scope: source.mcore
 # result without using a custom fragment system, please let me know. /John
 
 variables:
-  builtin_ident: '(?:unit|not|and|or|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|length|concat|nth|cons|slice|reverse|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi|get|set|splitAt|makeSeq)'
+  builtin_ident: '(?:unit|not|and|or|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|nth|cons|snoc|slice|reverse|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi|get|set|splitAt|makeSeq)'
   reserved_ident: '(?:if|then|else|let|match|with|lang|con|use|in|case|utest|lam)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
   ident: '(?:[a-zA-Z_][a-zA-Z_0-9]*)'
@@ -22,6 +22,24 @@ variables:
 contexts:
   prototype:
     - include: comment
+    - include: illegal-open-rparen
+    - include: illegal-open-rsquare
+    - include: illegal-open-rcurly
+
+  prototype-ignore-rparen:
+    - include: comment
+    - include: illegal-open-rsquare
+    - include: illegal-open-rcurly
+
+  prototype-ignore-rsquare:
+    - include: comment
+    - include: illegal-open-rparen
+    - include: illegal-open-rcurly
+
+  prototype-ignore-rcurly:
+    - include: comment
+    - include: illegal-open-rparen
+    - include: illegal-open-rsquare
 
   main:
     - include: top-level
@@ -32,6 +50,7 @@ contexts:
     - include: top-let
     - include: top-recursive
     - include: top-con
+    - include: top-type
     - include: top-mexpr
 
   top-level-pushed:
@@ -40,6 +59,7 @@ contexts:
     - include: top-let-pushed
     - include: top-recursive-pushed
     - include: top-con-pushed
+    - include: top-type-pushed
     - include: top-mexpr-pushed
 
   ###          ###
@@ -56,6 +76,19 @@ contexts:
   comment-line-content:
     - match: '.*'
       scope: comment.line.mcore
+
+  ###                                             ###
+  ### Illegal RParen/RSquareBracket/RCurlyBracket ###
+  ###                                             ###
+  illegal-open-rparen:
+    - match: '\)'
+      scope: invalid.illegal.rparen.mcore
+  illegal-open-rsquare:
+    - match: '\]'
+      scope: invalid.illegal.rsquare.mcore
+  illegal-open-rcurly:
+    - match: '\}'
+      scope: invalid.illegal.rcurly.mcore
 
   ###                               ###
   ### Top-Level Include Expressions ###
@@ -189,6 +222,19 @@ contexts:
       scope: keyword.directive.con.mcore
       set: [optidenttype-pushed-breaktoplevel, identifier-pushed]
 
+  ###                            ###
+  ### Top-Level Type Expressions ###
+  ###                            ###
+  top-type:
+    - match: '\b(type)\b'
+      scope: keyword.directive.type.mcore
+      push: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+
+  top-type-pushed:
+    - match: '\b(type)\b'
+      scope: keyword.directive.type.mcore
+      set: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+
   ###                             ###
   ### Top-Level MExpr Expressions ###
   ###                             ###
@@ -253,19 +299,24 @@ contexts:
   atoms-pushed-breaktoplevel:
     - include: top-level-pushed
     #%%IMPORT=atoms("atoms-pushed-breaktoplevel")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktoplevel")
   atoms-pushed-mandatory-breakrecbody:
     #%%IMPORT=atoms("atoms-pushed-breakrecbody")
   atoms-pushed-breakrecbody:
     - include: recursive-body-pushed
     #%%IMPORT=atoms("atoms-pushed-breakrecbody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecbody")
   atoms-pushed-mandatory-breaktoprecbody:
     #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
   atoms-pushed-breaktoprecbody:
     - include: top-recursive-body-pushed
     #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktoprecbody")
   atoms-pushed-mandatory-breaktuple:
     #%%IMPORT=atoms("atoms-pushed-breaktuple")
   atoms-pushed-breaktuple:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
@@ -273,9 +324,12 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breaktuple]
     #%%IMPORT=atoms("atoms-pushed-breaktuple")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktuple")
   atoms-pushed-mandatory-breakseq:
     #%%IMPORT=atoms("atoms-pushed-breakseq")
   atoms-pushed-breakseq:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
     - match: '\]'
       scope: symbol.rsquare.mcore
       pop: true
@@ -283,9 +337,12 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakseq]
     #%%IMPORT=atoms("atoms-pushed-breakseq")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakseq")
   atoms-pushed-mandatory-breakrecordcontinued:
     #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
   atoms-pushed-breakrecordcontinued:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
@@ -293,6 +350,7 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
     #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordcontinued")
   atoms-pushed-mandatory-breakrecordwith:
     #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
   atoms-pushed-breakrecordwith:
@@ -300,18 +358,23 @@ contexts:
       scope: keyword.other.with.mcore
       set: [mexpr-pushed-breakrecordend]
     #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordwith")
   atoms-pushed-mandatory-breakrecordend:
     #%%IMPORT=atoms("atoms-pushed-breakrecordend")
   atoms-pushed-breakrecordend:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
     #%%IMPORT=atoms("atoms-pushed-breakrecordend")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordend")
   atoms-pushed-mandatory-breaksembody:
     #%%IMPORT=atoms("atoms-pushed-breaksembody")
   atoms-pushed-breaksembody:
     - include: top-lang-sem-body-pushed
     #%%IMPORT=atoms("atoms-pushed-breaksembody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breaksembody")
   atoms-pushed-mandatory-breakin:
     #%%IMPORT=atoms("atoms-pushed-breakin")
   atoms-pushed-breakin:
@@ -319,6 +382,7 @@ contexts:
       scope: keyword.other.in.mcore
       pop: true
     #%%IMPORT=atoms("atoms-pushed-breakin")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakin")
   atoms-pushed-mandatory-breakthen:
     #%%IMPORT=atoms("atoms-pushed-breakthen")
   atoms-pushed-breakthen:
@@ -326,6 +390,7 @@ contexts:
       scope: keyword.other.then.mcore
       pop: true
     #%%IMPORT=atoms("atoms-pushed-breakthen")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakthen")
   atoms-pushed-mandatory-breakelse:
     #%%IMPORT=atoms("atoms-pushed-breakelse")
   atoms-pushed-breakelse:
@@ -333,6 +398,7 @@ contexts:
       scope: keyword.other.else.mcore
       pop: true
     #%%IMPORT=atoms("atoms-pushed-breakelse")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakelse")
   atoms-pushed-mandatory-breakwith:
     #%%IMPORT=atoms("atoms-pushed-breakwith")
   atoms-pushed-breakwith:
@@ -340,6 +406,7 @@ contexts:
       scope: keyword.other.with.mcore
       pop: true
     #%%IMPORT=atoms("atoms-pushed-breakwith")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-breakwith")
 
   ###                  ###
   ### Type Expressions ###
@@ -350,6 +417,8 @@ contexts:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
       set: [typeexpr-pushed-breakrparen]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
@@ -378,7 +447,7 @@ contexts:
       scope: keyword.operator.right-arrow.mcore
       set: [typeexpr-pushed-breakdot]
     - match: '[.]'
-      scope: symbol.dot.mcore
+      scope: keyword.other.lamdot.mcore
       pop: true
   typeexpr-pushed-breakrsquare:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakrsquare")
@@ -386,6 +455,8 @@ contexts:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
       set: [typeexpr-pushed-breakrsquare]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
     - match: '\]'
       scope: symbol.rsquare.mcore
       pop: true
@@ -398,6 +469,8 @@ contexts:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [typeexpr-pushed-breaktuple]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
@@ -409,7 +482,9 @@ contexts:
       set: [typeexpr-pushed-breakrecord]
     - match: '[,]'
       scope: symbol.comma.mcore
-      set: [typeexpr-pushed-breakrecord]
+      set: [typeexpr-pushed-breakrecord, colon-pushed, identifier-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
@@ -447,7 +522,7 @@ contexts:
       scope: symbol.colon.mcore
       set: [typeexpr-pushed-breakdot]
     - match: '[.]'
-      scope: keyword.operator.lamdot.mcore
+      scope: keyword.other.lamdot.mcore
       pop: true
   optidenttype-pushed-breaktoplevel:
     - match: '(:)'
@@ -455,91 +530,166 @@ contexts:
       set: [typeexpr-pushed-breaktoplevel]
     - include: top-level-pushed
 
+  opttypetype-pushed-breakin:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [typeexpr-pushed-breakin]
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+  opttypetype-pushed-breaktoplevel:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [typeexpr-pushed-breaktoplevel]
+    - include: top-level-pushed
+
   ###                     ###
   ### Pattern Expressions ###
   ###                     ###
   pattern-pushed-breakrightarrow:
-    #%%IMPORT=pattern("rightarrow-pushed", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
+    #%%IMPORT=pattern("pattern-pushed-breakrightarrow-cond", "pattern-pushed-breakrightarrow", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
   pattern-pushed-concatseq-or-breakrightarrow:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [rightarrow-pushed, patternseq-pushed]
-    - match: '(->)'
-      scope: keyword.operator.right-arrow.mcore
-      pop: true
-    #%%IMPORT=pattern("rightarrow-pushed", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
+      set: [pattern-pushed-breakrightarrow-cond, patternseq-pushed]
+    - include: pattern-pushed-breakrightarrow-cond
+    #%%IMPORT=pattern("pattern-pushed-breakrightarrow-cond", "pattern-pushed-breakrightarrow", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
   pattern-pushed-concatident-or-breakrightarrow:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [rightarrow-pushed, identifier-pushed]
-    - match: '(->)'
-      scope: keyword.operator.right-arrow.mcore
-      pop: true
+      set: [pattern-pushed-pushseq-or-breakrightarrow-cond, identifier-pushed]
+    - include: pattern-pushed-breakrightarrow-cond
+  pattern-pushed-pushseq-or-breakrightarrow-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakrightarrow-cond, patternseq-pushed]
+    - include: pattern-pushed-breakrightarrow-cond
+  pattern-pushed-breakrightarrow-cond:
+    - include: rightarrow-pushed
+    #%%IMPORT=pattern-continuation("pattern-pushed-breakrightarrow")
   pattern-pushed-breakthen:
-    #%%IMPORT=pattern("directive-then-pushed", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
+    #%%IMPORT=pattern("pattern-pushed-breakthen-cond", "pattern-pushed-breakthen", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
   pattern-pushed-concatseq-or-breakthen:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [directive-then-pushed, patternseq-pushed]
-    - match: '\b(then)\b'
-      scope: keyword.other.then.mcore
-      pop: true
-    #%%IMPORT=pattern("directive-then-pushed", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
+      set: [pattern-pushed-breakthen-cond, patternseq-pushed]
+    - include: pattern-pushed-breakthen-cond
+    #%%IMPORT=pattern("pattern-pushed-breakthen-cond", "pattern-pushed-breakthen", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
   pattern-pushed-concatident-or-breakthen:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [directive-then-pushed, identifier-pushed]
-    - match: '\b(then)\b'
-      scope: keyword.other.then.mcore
-      pop: true
+      set: [pattern-pushed-pushseq-or-breakthen-cond, identifier-pushed]
+    - include: pattern-pushed-breakthen-cond
+  pattern-pushed-pushseq-or-breakthen-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakthen-cond, patternseq-pushed]
+    - include: pattern-pushed-breakthen-cond
+  pattern-pushed-breakthen-cond:
+    - include: directive-then-pushed
+    #%%IMPORT=pattern-continuation("pattern-pushed-breakthen")
   pattern-pushed-breakseq:
-    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
+    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-breakseq", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
   pattern-pushed-concatseq-or-breakseq:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
       set: [pattern-pushed-breakseq-cond, patternseq-pushed]
-    - match: '\]'
-      scope: symbol.rsquare.mcore
-      pop: true
-    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - include: pattern-pushed-breakseq-cond
+    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-breakseq", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
   pattern-pushed-concatident-or-breakseq:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [pattern-pushed-breakseq-cond, identifier-pushed]
-    - match: '\]'
-      scope: symbol.rsquare.mcore
-      pop: true
+      set: [pattern-pushed-pushseq-or-breakseq-cond, identifier-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - include: pattern-pushed-breakseq-cond
+  pattern-pushed-pushseq-or-breakseq-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakseq-cond, patternseq-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - include: pattern-pushed-breakseq-cond
   pattern-pushed-breakseq-cond:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [pattern-pushed-breakseq]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
     - match: '\]'
       scope: symbol.rsquare.mcore
       pop: true
+    #%%IMPORT=pattern-continuation("pattern-pushed-breakseq")
   pattern-pushed-breaktuple:
-    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
+    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-breaktuple", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
   pattern-pushed-concatseq-or-breaktuple:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
       set: [pattern-pushed-breaktuple-cond, patternseq-pushed]
-    - match: '\)'
-      scope: symbol.rparen.mcore
-      pop: true
-    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - include: pattern-pushed-breaktuple-cond
+    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-breaktuple", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
   pattern-pushed-concatident-or-breaktuple:
     - match: '([+][+])'
       scope: keyword.operator.concat.mcore
-      set: [pattern-pushed-breaktuple-cond, identifier-pushed]
-    - match: '\)'
-      scope: symbol.rparen.mcore
-      pop: true
+      set: [pattern-pushed-pushseq-or-breaktuple-cond, identifier-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - include: pattern-pushed-breaktuple-cond
+  pattern-pushed-pushseq-or-breaktuple-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breaktuple-cond, patternseq-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - include: pattern-pushed-breaktuple-cond
   pattern-pushed-breaktuple-cond:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [pattern-pushed-breaktuple]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
+    #%%IMPORT=pattern-continuation("pattern-pushed-breaktuple")
+  pattern-pushed-breakrecord:
+    #%%IMPORT=pattern("pattern-pushed-breakrecord-cond", "pattern-pushed-breakrecord", "pattern-pushed-concatseq-or-breakrecord", "pattern-pushed-concatident-or-breakrecord")
+  pattern-pushed-concatseq-or-breakrecord:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakrecord-cond, patternseq-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - include: pattern-pushed-breakrecord-cond
+    #%%IMPORT=pattern("pattern-pushed-breakrecord-cond", "pattern-pushed-breakrecord", "pattern-pushed-concatseq-or-breakrecord", "pattern-pushed-concatident-or-breakrecord")
+  pattern-pushed-concatident-or-breakrecord:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-pushseq-or-breakrecord-cond, identifier-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - include: pattern-pushed-breakrecord-cond
+  pattern-pushed-pushseq-or-breakrecord-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakrecord-cond, patternseq-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - include: pattern-pushed-breakrecord-cond
+  pattern-pushed-breakrecord-cond:
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [pattern-pushed-breakrecord, eqoperator-pushed, identifier-pushed]
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    #%%IMPORT=pattern-continuation("pattern-pushed-breakrecord")
 
   patternseq-pushed:
     - match: '(")'
@@ -550,6 +700,9 @@ contexts:
           pop: true
         - include: stringsymbol
         - meta_include_prototype: false
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      pop: true
     - match: '\['
       scope: symbol.lsquare.mcore
       set: [pattern-pushed-breakseq]
@@ -587,6 +740,8 @@ contexts:
           set: [record-eqorwith-pushed]
         - include: stringsymbol
         - meta_include_prototype: false
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
@@ -598,6 +753,10 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [mexpr-pushed-breakrecordcontinued]
+
+  record-proj-label-pushed:
+    - include: identifier-pushed
+    - include: uinteger-pushed
 
   ###                ###
   ### String Symbols ###
@@ -617,9 +776,9 @@ contexts:
     - match: '[^"\\]'
       scope: string.character.mcore
 
-  ###                    ###
-  ### Identifier Symbols ###
-  ###                    ###
+  ###                   ###
+  ### Identifier Tokens ###
+  ###                   ###
   identifier-pushed:
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
@@ -628,7 +787,7 @@ contexts:
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
       pop: true
-    - match: '(#(?:var|con|type))(")'
+    - match: '(#(?:var|con|type|label))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -638,6 +797,14 @@ contexts:
           pop: true
         - include: stringsymbol
         - meta_include_prototype: false
+
+  ###                ###
+  ### Integer Tokens ###
+  ###                ###
+  uinteger-pushed:
+  - match: '[0-9]+'
+    scope: constant.numeric.integer.mcore
+    pop: true
 
   ###                          ###
   ### Pushed Singleton Symbols ###
@@ -651,6 +818,8 @@ contexts:
       scope: symbol.colon.mcore
       pop: true
   rparen-pushed:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true

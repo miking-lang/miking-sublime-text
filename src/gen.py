@@ -8,9 +8,9 @@ import sys
 import tempfile
 
 p_templatefname = regex.compile(r"(?P<filename>(?P<name>\w+)[.]sublime-syntax-base)")
-p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[a-zA-Z]+)[(]\s*(?:\"(?P<args>[^\"]+)\"\s*(?:[,]\s*\"(?P<args>[^\"]+)\"\s*)*)?[)])")
-p_args = regex.compile(r"(?P<full>#%%ARGS=[(](?:(?P<args>[a-zA-Z]+)(?:[,](?P<args>[a-zA-Z]+))*)?[)])")
-p_usearg = regex.compile(r"(?P<full>(#|%)%%USEARG=(?P<name>[a-zA-Z]+))")
+p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[-a-zA-Z]+)[(]\s*(?:\"(?P<args>[^\"]+)\"\s*(?:[,]\s*\"(?P<args>[^\"]+)\"\s*)*)?[)])")
+p_args = regex.compile(r"(?P<full>#%%ARGS=[(](?:(?P<args>[-a-zA-Z]+)(?:[,](?P<args>[-a-zA-Z]+))*)?[)])")
+p_usearg = regex.compile(r"(?P<full>(#|%)%%USEARG=(?P<name>[-a-zA-Z]+))")
 
 def main(args):
 	cwd = os.path.dirname(os.path.realpath(__file__))

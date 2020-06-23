@@ -1,5 +1,26 @@
 %YAML 1.2
-#%%ARGS=(TerminatorCase,LhsConcatCase,RhsConcatCase)
+#%%ARGS=(TerminatorCase,SelfCase,LhsConcatCase,RhsConcatCase)
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '[{]\s*[}]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '\[\s*\]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=RhsConcatCase]
+- match: '\b(true|false)\b'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+  scope: constant.numeric.float.stdform.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9][.]([0-9])*'
+  scope: constant.numeric.float.normal.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9]+'
+  scope: constant.numeric.integer.mcore
+  set: [%%%USEARG=TerminatorCase]
 - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
   captures:
     1: support.function.builtin.ident.mcore
@@ -17,24 +38,6 @@
       set: [%%%USEARG=LhsConcatCase]
     - include: stringsymbol
     - meta_include_prototype: false
-- match: '[(]\s*[)]'
-  scope: constant.language.mcore
-  set: [%%%USEARG=TerminatorCase]
-- match: '\[\s*\]'
-  scope: constant.language.mcore
-  set: [%%%USEARG=TerminatorCase]
-- match: '(true|false)'
-  scope: constant.language.mcore
-  set: [%%%USEARG=TerminatorCase]
-- match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
-  scope: constant.numeric.float.stdform.mcore
-  set: [%%%USEARG=TerminatorCase]
-- match: '(-)?[0-9][.][0-9]+'
-  scope: constant.numeric.float.normal.mcore
-  set: [%%%USEARG=TerminatorCase]
-- match: '(-)?[0-9]+'
-  scope: constant.numeric.integer.mcore
-  set: [%%%USEARG=TerminatorCase]
 - match: '('')({{escapechar}})('')'
   captures:
     1: string.quote.single.mcore
@@ -58,3 +61,9 @@
 - match: '\('
   scope: symbol.lparen.mcore
   set: [%%%USEARG=TerminatorCase, pattern-pushed-breaktuple]
+- match: '\{'
+  scope: symbol.lcurly.mcore
+  set: [%%%USEARG=TerminatorCase, pattern-pushed-breakrecord, eqoperator-pushed, identifier-pushed]
+- match: '[!]'
+  scope: keyword.operator.not.mcore
+  set: [%%%USEARG=SelfCase]

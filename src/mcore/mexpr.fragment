@@ -20,7 +20,7 @@
   set: [%%%USEARG=ThisName, recursive-body-pushed]
 - match: '\b(type)\b'
   scope: keyword.other.type.mcore
-  set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
+  set: [%%%USEARG=ThisName, opttypetype-pushed-breakin, identifier-pushed]
 - match: '\b(use)\b'
   scope: keyword.other.use.mcore
   set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
