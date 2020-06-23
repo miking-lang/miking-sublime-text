@@ -1,0 +1,60 @@
+%YAML 1.2
+#%%ARGS=(TerminatorCase,LhsConcatCase,RhsConcatCase)
+- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+  captures:
+    1: support.function.builtin.ident.mcore
+    2: invalid.illegal.reserved.ident.mcore
+    3: keyword.other.ignored.ident.mcore
+    4: other.ident.mcore
+  set: [%%%USEARG=LhsConcatCase]
+- match: '(#(?:var|con|type))(")'
+  captures:
+    1: keyword.directive.identifier.mcore
+    2: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=LhsConcatCase]
+    - include: stringsymbol
+    - meta_include_prototype: false
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '\[\s*\]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(true|false)'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+  scope: constant.numeric.float.stdform.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9][.][0-9]+'
+  scope: constant.numeric.float.normal.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(-)?[0-9]+'
+  scope: constant.numeric.integer.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '('')({{escapechar}})('')'
+  captures:
+    1: string.quote.single.mcore
+    2: constant.character.escape.mcore
+    3: string.quote.single.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '('')([^''\\])('')'
+  scope: string.quote.single.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '(")'
+  scope: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=RhsConcatCase]
+    - include: stringsymbol
+    - meta_include_prototype: false
+- match: '\['
+  scope: symbol.lsquare.mcore
+  set: [%%%USEARG=RhsConcatCase, pattern-pushed-breakseq]
+- match: '\('
+  scope: symbol.lparen.mcore
+  set: [%%%USEARG=TerminatorCase, pattern-pushed-breaktuple]

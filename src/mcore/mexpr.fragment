@@ -1,0 +1,29 @@
+%YAML 1.2
+#%%ARGS=(ThisName)
+- match: '\b(con)\b'
+  scope: keyword.other.con.mcore
+  set: [%%%USEARG=ThisName, optidenttype-pushed-breakin, identifier-pushed]
+- match: '\b(if)\b'
+  scope: keyword.other.if.mcore
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
+- match: '\b(lam)\b'
+  scope: keyword.other.lam.mcore
+  set: [%%%USEARG=ThisName, optidenttype-pushed-breakdot, identifier-pushed]
+- match: '\b(let)\b'
+  scope: keyword.other.let.mcore
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+- match: '\b(match)\b'
+  scope: keyword.other.match.mcore
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakelse, pattern-pushed-breakthen, mexpr-pushed-breakwith]
+- match: '\b(recursive)\b'
+  scope: keyword.other.recursive.mcore
+  set: [%%%USEARG=ThisName, recursive-body-pushed]
+- match: '\b(type)\b'
+  scope: keyword.other.type.mcore
+  set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
+- match: '\b(use)\b'
+  scope: keyword.other.use.mcore
+  set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
+- match: '\b(utest)\b'
+  scope: keyword.other.utest.mcore
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakin, mexpr-pushed-breakwith]

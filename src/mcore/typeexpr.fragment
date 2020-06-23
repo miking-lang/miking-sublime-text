@@ -1,0 +1,35 @@
+%YAML 1.2
+#%%ARGS=(BreakCheckName)
+- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+  captures:
+    1: support.function.builtin.ident.mcore
+    2: invalid.illegal.reserved.ident.mcore
+    3: keyword.other.ignored.ident.mcore
+    4: keyword.directive.typename.mcore
+    5: other.ident.mcore
+  set: [%%%USEARG=BreakCheckName]
+- match: '(#(?:var|con|type))(")'
+  captures:
+    1: keyword.directive.identifier.mcore
+    2: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=BreakCheckName]
+    - include: stringsymbol
+    - meta_include_prototype: false
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=BreakCheckName]
+- match: '[{]\s*[}]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=BreakCheckName]
+- match: '\['
+  scope: symbol.lsquare.mcore
+  set: [%%%USEARG=BreakCheckName, typeexpr-pushed-breakrsquare]
+- match: '\('
+  scope: symbol.lparen.mcore
+  set: [%%%USEARG=BreakCheckName, typeexpr-pushed-breaktuple]
+- match: '\{'
+  scope: symbol.lcurly.mcore
+  set: [%%%USEARG=BreakCheckName, typeexpr-pushed-breakrecord, colon-pushed, identifier-pushed]

@@ -1,0 +1,668 @@
+%YAML 1.2
+---
+name: MCore
+file_extensions:
+  - mc
+scope: source.mcore
+
+# To whoever is reading this:
+# Due to the parsing nature of MCore not being very LL1-focused, this syntax
+# highlighter uses a fragment system to generate the final .sublime-syntax file
+# to avoid a lot of code duplication. If you know of a way to achieve the same
+# result without using a custom fragment system, please let me know. /John
+
+variables:
+  builtin_ident: '(?:unit|not|and|or|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|length|concat|nth|cons|slice|reverse|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi|get|set|splitAt|makeSeq)'
+  reserved_ident: '(?:if|then|else|let|match|with|lang|con|use|in|case|utest|lam)'
+  type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
+  ident: '(?:[a-zA-Z_][a-zA-Z_0-9]*)'
+  escapechar: '(?:\\(?:[?abfnrtv"\\]|''))'
+
+# Context parsing
+contexts:
+  prototype:
+    - include: comment
+
+  main:
+    - include: top-level
+
+  top-level:
+    - include: top-include
+    - include: top-lang
+    - include: top-let
+    - include: top-recursive
+    - include: top-con
+    - include: top-mexpr
+
+  top-level-pushed:
+    - include: top-include-pushed
+    - include: top-lang-pushed
+    - include: top-let-pushed
+    - include: top-recursive-pushed
+    - include: top-con-pushed
+    - include: top-mexpr-pushed
+
+  ###          ###
+  ### Comments ###
+  ###          ###
+  comment:
+    - match: '(--|//)'
+      scope: comment.line.mcore
+      push:
+        - match: '\n'
+          scope: comment.line.mcore
+          pop: true
+        - include: comment-line-content
+  comment-line-content:
+    - match: '.*'
+      scope: comment.line.mcore
+
+  ###                               ###
+  ### Top-Level Include Expressions ###
+  ###                               ###
+  top-include:
+    - match: '\b(include)\b'
+      scope: keyword.directive.include.mcore
+      push: [string-pushed]
+
+  top-include-pushed:
+    - match: '\b(include)\b'
+      scope: keyword.directive.include.mcore
+      set: [string-pushed]
+
+  ###                            ###
+  ### Top-Level Lang Expressions ###
+  ###                            ###
+  top-lang:
+    - match: '\b(lang)\b'
+      scope: keyword.directive.lang.mcore
+      push: [top-lang-entry-pushed, identifier-pushed]
+
+  top-lang-pushed:
+    - match: '\b(lang)\b'
+      scope: keyword.directive.lang.mcore
+      set: [top-lang-entry-pushed, identifier-pushed]
+
+  top-lang-entry-pushed:
+      # Check what comes after 'lang'
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-eqexpr-pushed, identifier-pushed]
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-end-pushed
+    - include: top-level-pushed
+
+  top-lang-eqexpr-pushed:
+      # lang X = ...
+    - match: '(\+)'
+      scope: keyword.operator.combine.mcore
+      set: [top-lang-eqexpr-pushed, identifier-pushed]
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-end-pushed
+    - include: top-level-pushed
+
+  top-lang-end-pushed:
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+
+  top-lang-syn-entry-pushed:
+    - match: '\b(syn)\b'
+      scope: keyword.other.syn.mcore
+      set: [top-lang-syn-body-pushed, eqoperator-pushed, identifier-pushed]
+
+  top-lang-syn-body-pushed:
+    - match: '(\|)'
+      scope: keyword.operator.case.mcore
+      set: [typeexpr-pushed-breaksynbody, identifier-pushed]
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-end-pushed
+
+  top-lang-sem-entry-pushed:
+    - match: '\b(sem)\b'
+      scope: keyword.other.sem.mcore
+      set: [top-lang-sem-preamble-pushed, identifier-pushed]
+
+  top-lang-sem-preamble-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-sem-body-pushed]
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [top-lang-sem-preamble-pushed, typeexpr-pushed-breakrparen, colon-pushed, identifier-pushed]
+
+  top-lang-sem-body-pushed:
+    - match: '(\|)'
+      scope: keyword.operator.case.mcore
+      set: [mexpr-pushed-breaksembody, pattern-pushed-breakrightarrow]
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-end-pushed
+
+  ###                           ###
+  ### Top-Level Let Expressions ###
+  ###                           ###
+  top-let:
+    - match: '\b(let)\b'
+      scope: keyword.directive.let.mcore
+      push: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+
+  top-let-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.directive.let.mcore
+      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+
+  ###                                 ###
+  ### Top-Level Recursive Expressions ###
+  ###                                 ###
+  top-recursive:
+    - match: '\b(recursive)\b'
+      scope: keyword.directive.recursive.mcore
+      push: [top-recursive-body-pushed]
+
+  top-recursive-pushed:
+    - match: '\b(recursive)\b'
+      scope: keyword.directive.recursive.mcore
+      set: [top-recursive-body-pushed]
+
+  top-recursive-body-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakeq, identifier-pushed]
+    - match: '\b(end)\b'
+      scope: keyword.directive.end.mcore
+      pop: true
+
+  ###                           ###
+  ### Top-Level Con Expressions ###
+  ###                           ###
+  top-con:
+    - match: '\b(con)\b'
+      scope: keyword.directive.con.mcore
+      push: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+
+  top-con-pushed:
+    - match: '\b(con)\b'
+      scope: keyword.directive.con.mcore
+      set: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+
+  ###                             ###
+  ### Top-Level MExpr Expressions ###
+  ###                             ###
+  top-mexpr:
+    - match: '\b(mexpr)\b'
+      scope: keyword.directive.mexpr.mcore
+      push: [mexpr-pushed-breaktoplevel]
+
+  top-mexpr-pushed:
+    - match: '\b(mexpr)\b'
+      scope: keyword.directive.mexpr.mcore
+      set: [mexpr-pushed-breaktoplevel]
+
+  ###                   ###
+  ### MExpr Expressions ###
+  ###                   ###
+  mexpr-pushed-breaktoplevel:
+    #%%IMPORT=mexpr("mexpr-pushed-breaktoplevel")
+    - include: atoms-pushed-mandatory-breaktoplevel
+  mexpr-pushed-breakrecbody:
+    #%%IMPORT=mexpr("mexpr-pushed-breakrecbody")
+    - include: atoms-pushed-mandatory-breakrecbody
+  mexpr-pushed-breaktoprecbody:
+    #%%IMPORT=mexpr("mexpr-pushed-breaktoprecbody")
+    - include: atoms-pushed-mandatory-breaktoprecbody
+  mexpr-pushed-breaktuple:
+    #%%IMPORT=mexpr("mexpr-pushed-breaktuple")
+    - include: atoms-pushed-mandatory-breaktuple
+  mexpr-pushed-breakseq:
+    #%%IMPORT=mexpr("mexpr-pushed-breakseq")
+    - include: atoms-pushed-mandatory-breakseq
+  mexpr-pushed-breakrecordcontinued:
+    #%%IMPORT=mexpr("mexpr-pushed-breakrecordcontinued")
+    - include: atoms-pushed-mandatory-breakrecordcontinued
+  mexpr-pushed-breakrecordwith:
+    #%%IMPORT=mexpr("mexpr-pushed-breakrecordwith")
+    - include: atoms-pushed-mandatory-breakrecordwith
+  mexpr-pushed-breakrecordend:
+    #%%IMPORT=mexpr("mexpr-pushed-breakrecordend")
+    - include: atoms-pushed-mandatory-breakrecordend
+  mexpr-pushed-breaksembody:
+    #%%IMPORT=mexpr("mexpr-pushed-breaksembody")
+    - include: atoms-pushed-mandatory-breaksembody
+  mexpr-pushed-breakin:
+    #%%IMPORT=mexpr("mexpr-pushed-breakin")
+    - include: atoms-pushed-mandatory-breakin
+  mexpr-pushed-breakthen:
+    #%%IMPORT=mexpr("mexpr-pushed-breakthen")
+    - include: atoms-pushed-mandatory-breakthen
+  mexpr-pushed-breakelse:
+    #%%IMPORT=mexpr("mexpr-pushed-breakelse")
+    - include: atoms-pushed-mandatory-breakelse
+  mexpr-pushed-breakwith:
+    #%%IMPORT=mexpr("mexpr-pushed-breakwith")
+    - include: atoms-pushed-mandatory-breakwith
+
+  ###             ###
+  ### MExpr Atoms ###
+  ###             ###
+  atoms-pushed-mandatory-breaktoplevel:
+    #%%IMPORT=atoms("atoms-pushed-breaktoplevel")
+  atoms-pushed-breaktoplevel:
+    - include: top-level-pushed
+    #%%IMPORT=atoms("atoms-pushed-breaktoplevel")
+  atoms-pushed-mandatory-breakrecbody:
+    #%%IMPORT=atoms("atoms-pushed-breakrecbody")
+  atoms-pushed-breakrecbody:
+    - include: recursive-body-pushed
+    #%%IMPORT=atoms("atoms-pushed-breakrecbody")
+  atoms-pushed-mandatory-breaktoprecbody:
+    #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
+  atoms-pushed-breaktoprecbody:
+    - include: top-recursive-body-pushed
+    #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
+  atoms-pushed-mandatory-breaktuple:
+    #%%IMPORT=atoms("atoms-pushed-breaktuple")
+  atoms-pushed-breaktuple:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breaktuple]
+    #%%IMPORT=atoms("atoms-pushed-breaktuple")
+  atoms-pushed-mandatory-breakseq:
+    #%%IMPORT=atoms("atoms-pushed-breakseq")
+  atoms-pushed-breakseq:
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breakseq]
+    #%%IMPORT=atoms("atoms-pushed-breakseq")
+  atoms-pushed-mandatory-breakrecordcontinued:
+    #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
+  atoms-pushed-breakrecordcontinued:
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
+    #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
+  atoms-pushed-mandatory-breakrecordwith:
+    #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
+  atoms-pushed-breakrecordwith:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
+      set: [mexpr-pushed-breakrecordend]
+    #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
+  atoms-pushed-mandatory-breakrecordend:
+    #%%IMPORT=atoms("atoms-pushed-breakrecordend")
+  atoms-pushed-breakrecordend:
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    #%%IMPORT=atoms("atoms-pushed-breakrecordend")
+  atoms-pushed-mandatory-breaksembody:
+    #%%IMPORT=atoms("atoms-pushed-breaksembody")
+  atoms-pushed-breaksembody:
+    - include: top-lang-sem-body-pushed
+    #%%IMPORT=atoms("atoms-pushed-breaksembody")
+  atoms-pushed-mandatory-breakin:
+    #%%IMPORT=atoms("atoms-pushed-breakin")
+  atoms-pushed-breakin:
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+    #%%IMPORT=atoms("atoms-pushed-breakin")
+  atoms-pushed-mandatory-breakthen:
+    #%%IMPORT=atoms("atoms-pushed-breakthen")
+  atoms-pushed-breakthen:
+    - match: '\b(then)\b'
+      scope: keyword.other.then.mcore
+      pop: true
+    #%%IMPORT=atoms("atoms-pushed-breakthen")
+  atoms-pushed-mandatory-breakelse:
+    #%%IMPORT=atoms("atoms-pushed-breakelse")
+  atoms-pushed-breakelse:
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
+      pop: true
+    #%%IMPORT=atoms("atoms-pushed-breakelse")
+  atoms-pushed-mandatory-breakwith:
+    #%%IMPORT=atoms("atoms-pushed-breakwith")
+  atoms-pushed-breakwith:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
+      pop: true
+    #%%IMPORT=atoms("atoms-pushed-breakwith")
+
+  ###                  ###
+  ### Type Expressions ###
+  ###                  ###
+  typeexpr-pushed-breakrparen:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakrparen")
+  typeexpr-pushed-continuearrow-or-breakrparen:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakrparen]
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+  typeexpr-pushed-breakeq:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakeq")
+  typeexpr-pushed-continuearrow-or-breakeq:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakeq]
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+  typeexpr-pushed-breakin:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakin")
+  typeexpr-pushed-continuearrow-or-breakin:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakin]
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+  typeexpr-pushed-breakdot:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakdot")
+  typeexpr-pushed-continuearrow-or-breakdot:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakdot]
+    - match: '[.]'
+      scope: symbol.dot.mcore
+      pop: true
+  typeexpr-pushed-breakrsquare:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakrsquare")
+  typeexpr-pushed-continuearrow-or-breakrsquare:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakrsquare]
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+  typeexpr-pushed-breaktuple:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrparen")
+  typeexpr-pushed-continuearrowcomma-or-breakrparen:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breaktuple]
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [typeexpr-pushed-breaktuple]
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+  typeexpr-pushed-breakrecord:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrcurly")
+  typeexpr-pushed-continuearrowcomma-or-breakrcurly:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breakrecord]
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [typeexpr-pushed-breakrecord]
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+  typeexpr-pushed-breaksynbody:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breaksynbody")
+  typeexpr-pushed-continuearrow-or-breaksynbody:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breaksynbody]
+    - include: top-lang-syn-body-pushed
+  typeexpr-pushed-breaktoplevel:
+    #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breaktoplevel")
+  typeexpr-pushed-continuearrow-or-breaktoplevel:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breaktoplevel]
+    - include: top-level-pushed
+
+  optidenttype-pushed-breakeq:
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breakeq]
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+  optidenttype-pushed-breakin:
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breakin]
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+  optidenttype-pushed-breakdot:
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breakdot]
+    - match: '[.]'
+      scope: keyword.operator.lamdot.mcore
+      pop: true
+  optidenttype-pushed-breaktoplevel:
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breaktoplevel]
+    - include: top-level-pushed
+
+  ###                     ###
+  ### Pattern Expressions ###
+  ###                     ###
+  pattern-pushed-breakrightarrow:
+    #%%IMPORT=pattern("rightarrow-pushed", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
+  pattern-pushed-concatseq-or-breakrightarrow:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [rightarrow-pushed, patternseq-pushed]
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      pop: true
+    #%%IMPORT=pattern("rightarrow-pushed", "pattern-pushed-concatseq-or-breakrightarrow", "pattern-pushed-concatident-or-breakrightarrow")
+  pattern-pushed-concatident-or-breakrightarrow:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [rightarrow-pushed, identifier-pushed]
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      pop: true
+  pattern-pushed-breakthen:
+    #%%IMPORT=pattern("directive-then-pushed", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
+  pattern-pushed-concatseq-or-breakthen:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [directive-then-pushed, patternseq-pushed]
+    - match: '\b(then)\b'
+      scope: keyword.other.then.mcore
+      pop: true
+    #%%IMPORT=pattern("directive-then-pushed", "pattern-pushed-concatseq-or-breakthen", "pattern-pushed-concatident-or-breakthen")
+  pattern-pushed-concatident-or-breakthen:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [directive-then-pushed, identifier-pushed]
+    - match: '\b(then)\b'
+      scope: keyword.other.then.mcore
+      pop: true
+  pattern-pushed-breakseq:
+    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
+  pattern-pushed-concatseq-or-breakseq:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakseq-cond, patternseq-pushed]
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+    #%%IMPORT=pattern("pattern-pushed-breakseq-cond", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
+  pattern-pushed-concatident-or-breakseq:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakseq-cond, identifier-pushed]
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+  pattern-pushed-breakseq-cond:
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [pattern-pushed-breakseq]
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+  pattern-pushed-breaktuple:
+    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
+  pattern-pushed-concatseq-or-breaktuple:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breaktuple-cond, patternseq-pushed]
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    #%%IMPORT=pattern("pattern-pushed-breaktuple-cond", "pattern-pushed-concatseq-or-breaktuple", "pattern-pushed-concatident-or-breaktuple")
+  pattern-pushed-concatident-or-breaktuple:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breaktuple-cond, identifier-pushed]
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+  pattern-pushed-breaktuple-cond:
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [pattern-pushed-breaktuple]
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+
+  patternseq-pushed:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [pattern-pushed-breakseq]
+
+  ###                           ###
+  ### Recursive Expression Body ###
+  ###      (Not Top-Level)      ###
+  ###                           ###
+  recursive-body-pushed:
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakeq, identifier-pushed]
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+
+  ###             ###
+  ### Record Body ###
+  ###             ###
+  record-entry-pushed:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      set: [record-eqorwith-pushed]
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [record-eqorwith-pushed]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - include: mexpr-pushed-breakrecordwith
+  record-eqorwith-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
+      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [mexpr-pushed-breakrecordcontinued]
+
+  ###                ###
+  ### String Symbols ###
+  ###                ###
+  string-pushed:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+        - meta_include_prototype: false
+  stringsymbol:
+    - match: '{{escapechar}}'
+      scope: constant.character.escape.mcore
+    - match: '[^"\\]'
+      scope: string.character.mcore
+
+  ###                    ###
+  ### Identifier Symbols ###
+  ###                    ###
+  identifier-pushed:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      pop: true
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+        - meta_include_prototype: false
+
+  ###                          ###
+  ### Pushed Singleton Symbols ###
+  ###                          ###
+  eqoperator-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      pop: true
+  colon-pushed:
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      pop: true
+  rparen-pushed:
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+  rightarrow-pushed:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      pop: true
+  directive-in-pushed:
+    - match: '\b(in)\b'
+      scope: keyword.other.in.mcore
+      pop: true
+  directive-then-pushed:
+    - match: '\b(then)\b'
+      scope: keyword.other.then.mcore
+      pop: true

@@ -1,0 +1,66 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '[{]\s*[}]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '\[\s*\]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '(true|false)'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+  scope: constant.numeric.float.stdform.mcore
+  set: [%%%USEARG=PopType]
+- match: '(-)?[0-9][.][0-9]+'
+  scope: constant.numeric.float.normal.mcore
+  set: [%%%USEARG=PopType]
+- match: '(-)?[0-9]+'
+  scope: constant.numeric.integer.mcore
+  set: [%%%USEARG=PopType]
+- match: '(")'
+  scope: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=PopType]
+    - include: stringsymbol
+    - meta_include_prototype: false
+- match: '('')({{escapechar}})('')'
+  captures:
+    1: string.quote.single.mcore
+    2: constant.character.escape.mcore
+    3: string.quote.single.mcore
+  set: [%%%USEARG=PopType]
+- match: '('')([^''\\])('')'
+  scope: string.quote.single.mcore
+  set: [%%%USEARG=PopType]
+- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+  captures:
+    1: support.function.builtin.ident.mcore
+    2: invalid.illegal.reserved.ident.mcore
+    3: keyword.other.ignored.ident.mcore
+    4: other.ident.mcore
+  set: [%%%USEARG=PopType]
+- match: '(#(?:var|con|type))(")'
+  captures:
+    1: keyword.directive.identifier.mcore
+    2: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=PopType]
+    - include: stringsymbol
+    - meta_include_prototype: false
+- match: '\('
+  scope: symbol.lparen.mcore
+  set: [%%%USEARG=PopType, mexpr-pushed-breaktuple]
+- match: '\['
+  scope: symbol.lsquare.mcore
+  set: [%%%USEARG=PopType, mexpr-pushed-breakseq]
+- match: '\{'
+  scope: symbol.lcurly.mcore
+  set: [%%%USEARG=PopType, record-entry-pushed]
