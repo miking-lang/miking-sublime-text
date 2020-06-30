@@ -2,4 +2,4 @@
 
 build:
 	$(eval PWD := $(shell pwd -P))
-	./src/gen.py mcore --dstdir=$(PWD)
+	python3 src/gen.py mcore --dstdir=$(PWD)
