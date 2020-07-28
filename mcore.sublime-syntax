@@ -45,6 +45,7 @@ contexts:
     - include: top-recursive
     - include: top-con
     - include: top-type
+    - include: top-utest
     - include: top-mexpr
 
   top-level-pushed:
@@ -54,6 +55,7 @@ contexts:
     - include: top-recursive-pushed
     - include: top-con-pushed
     - include: top-type-pushed
+    - include: top-utest-pushed
     - include: top-mexpr-pushed
 
   ###          ###
@@ -228,6 +230,19 @@ contexts:
     - match: '\b(type)\b'
       scope: keyword.directive.type.mcore
       set: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+
+  ###                             ###
+  ### Top-Level UTest Expressions ###
+  ###                             ###
+  top-utest:
+    - match: '\b(utest)\b'
+      scope: keyword.directive.utest.mcore
+      push: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakwith]
+
+  top-utest-pushed:
+    - match: '\b(utest)\b'
+      scope: keyword.directive.utest.mcore
+      set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakwith]
 
   ###                             ###
   ### Top-Level MExpr Expressions ###
