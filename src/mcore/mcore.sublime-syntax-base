@@ -365,7 +365,7 @@ contexts:
   atoms-pushed-breakrecordwith:
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
-      set: [mexpr-pushed-breakrecordend]
+      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
     #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
     #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordwith")
   atoms-pushed-mandatory-breakrecordend:
@@ -755,6 +755,7 @@ contexts:
       scope: symbol.rcurly.mcore
       pop: true
     - include: mexpr-pushed-breakrecordwith
+
   record-eqorwith-pushed:
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
