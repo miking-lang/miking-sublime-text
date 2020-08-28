@@ -412,6 +412,7 @@ contexts:
   ###                  ###
   ### Type Expressions ###
   ###                  ###
+  ### Note: The include at the end of each typeexpr case is to account for type application (e.g. Option a)
   typeexpr-pushed-breakrparen:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakrparen")
   typeexpr-pushed-continuearrow-or-breakrparen:
@@ -423,6 +424,7 @@ contexts:
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
+    - include: typeexpr-pushed-breakrparen
   typeexpr-pushed-breakeq:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakeq")
   typeexpr-pushed-continuearrow-or-breakeq:
@@ -432,6 +434,7 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       pop: true
+    - include: typeexpr-pushed-breakeq
   typeexpr-pushed-breakin:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakin")
   typeexpr-pushed-continuearrow-or-breakin:
@@ -441,6 +444,7 @@ contexts:
     - match: '\b(in)\b'
       scope: keyword.other.in.mcore
       pop: true
+    - include: typeexpr-pushed-breakin
   typeexpr-pushed-breakdot:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakdot")
   typeexpr-pushed-continuearrow-or-breakdot:
@@ -450,6 +454,7 @@ contexts:
     - match: '[.]'
       scope: keyword.other.lamdot.mcore
       pop: true
+    - include: typeexpr-pushed-breakdot
   typeexpr-pushed-breakrsquare:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breakrsquare")
   typeexpr-pushed-continuearrow-or-breakrsquare:
@@ -461,6 +466,7 @@ contexts:
     - match: '\]'
       scope: symbol.rsquare.mcore
       pop: true
+    - include: typeexpr-pushed-breakrsquare
   typeexpr-pushed-breaktuple:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrparen")
   typeexpr-pushed-continuearrowcomma-or-breakrparen:
@@ -475,6 +481,7 @@ contexts:
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
+    - include: typeexpr-pushed-breaktuple
   typeexpr-pushed-breakrecord:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrcurly")
   typeexpr-pushed-continuearrowcomma-or-breakrcurly:
@@ -489,6 +496,7 @@ contexts:
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
+    - include: typeexpr-pushed-breakrecord
   typeexpr-pushed-breaksynbody:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breaksynbody")
   typeexpr-pushed-continuearrow-or-breaksynbody:
@@ -496,6 +504,7 @@ contexts:
       scope: keyword.operator.right-arrow.mcore
       set: [typeexpr-pushed-breaksynbody]
     - include: top-lang-syn-body-pushed
+    - include: typeexpr-pushed-breaksynbody
   typeexpr-pushed-breaktoplevel:
     #%%IMPORT=typeexpr("typeexpr-pushed-continuearrow-or-breaktoplevel")
   typeexpr-pushed-continuearrow-or-breaktoplevel:
@@ -503,6 +512,7 @@ contexts:
       scope: keyword.operator.right-arrow.mcore
       set: [typeexpr-pushed-breaktoplevel]
     - include: top-level-pushed
+    - include: typeexpr-pushed-breaktoplevel
 
   optidenttype-pushed-breakeq:
     - match: '(:)'
