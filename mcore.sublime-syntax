@@ -288,7 +288,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breaktoplevel
+    - include: atoms-pushed-breaktoplevel
   mexpr-pushed-breakrecbody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -317,7 +317,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakrecbody
+    - include: atoms-pushed-breakrecbody
   mexpr-pushed-breaktoprecbody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -346,7 +346,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breaktoprecbody
+    - include: atoms-pushed-breaktoprecbody
   mexpr-pushed-breaktuple:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -375,7 +375,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breaktuple, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breaktuple
+    - include: atoms-pushed-breaktuple
   mexpr-pushed-breakseq:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -404,7 +404,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakseq, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakseq
+    - include: atoms-pushed-breakseq
   mexpr-pushed-breakrecordcontinued:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -433,7 +433,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakrecordcontinued
+    - include: atoms-pushed-breakrecordcontinued
   mexpr-pushed-breakrecordwith:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -462,7 +462,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakrecordwith
+    - include: atoms-pushed-breakrecordwith
   mexpr-pushed-breakrecordend:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -491,7 +491,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakrecordend
+    - include: atoms-pushed-breakrecordend
   mexpr-pushed-breaksembody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -520,7 +520,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breaksembody, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breaksembody
+    - include: atoms-pushed-breaksembody
   mexpr-pushed-breakin:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -549,7 +549,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakin, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakin
+    - include: atoms-pushed-breakin
   mexpr-pushed-breakthen:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -578,7 +578,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakthen, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakthen
+    - include: atoms-pushed-breakthen
   mexpr-pushed-breakelse:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -607,7 +607,7 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakelse, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakelse
+    - include: atoms-pushed-breakelse
   mexpr-pushed-breakwith:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -636,42 +636,42 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.other.utest.mcore
       set: [mexpr-pushed-breakwith, mexpr-pushed-breakin, mexpr-pushed-breakwith]
-    - include: atoms-pushed-mandatory-breakwith
+    - include: atoms-pushed-breakwith
 
   ###             ###
   ### MExpr Atoms ###
   ###             ###
-  atoms-pushed-mandatory-breaktoplevel:
+  atoms-pushed-breaktoplevel:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoplevel]
+          set: [atoms-pushed-optional-breaktoplevel]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -679,17 +679,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -697,50 +697,50 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoplevel]
+          set: [atoms-pushed-optional-breaktoplevel]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktoplevel, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktoplevel, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktoplevel, record-entry-pushed]
-  atoms-pushed-breaktoplevel:
+      set: [atoms-pushed-optional-breaktoplevel, record-entry-pushed]
+  atoms-pushed-optional-breaktoplevel:
     - include: top-level-pushed
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoplevel]
+          set: [atoms-pushed-optional-breaktoplevel]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -748,17 +748,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktoplevel]
+      set: [atoms-pushed-optional-breaktoplevel]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -766,52 +766,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoplevel]
+          set: [atoms-pushed-optional-breaktoplevel]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktoplevel, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktoplevel, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktoplevel, record-entry-pushed]
+      set: [atoms-pushed-optional-breaktoplevel, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breaktoplevel, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakrecbody:
+      set: [atoms-pushed-optional-breaktoplevel, record-proj-label-pushed]
+  atoms-pushed-breakrecbody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecbody]
+          set: [atoms-pushed-optional-breakrecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -819,17 +819,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -837,50 +837,50 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecbody]
+          set: [atoms-pushed-optional-breakrecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecbody, record-entry-pushed]
-  atoms-pushed-breakrecbody:
+      set: [atoms-pushed-optional-breakrecbody, record-entry-pushed]
+  atoms-pushed-optional-breakrecbody:
     - include: recursive-body-pushed
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecbody]
+          set: [atoms-pushed-optional-breakrecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -888,17 +888,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecbody]
+      set: [atoms-pushed-optional-breakrecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -906,52 +906,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecbody]
+          set: [atoms-pushed-optional-breakrecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecbody, record-entry-pushed]
+      set: [atoms-pushed-optional-breakrecbody, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakrecbody, record-proj-label-pushed]
-  atoms-pushed-mandatory-breaktoprecbody:
+      set: [atoms-pushed-optional-breakrecbody, record-proj-label-pushed]
+  atoms-pushed-breaktoprecbody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoprecbody]
+          set: [atoms-pushed-optional-breaktoprecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -959,17 +959,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -977,50 +977,50 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoprecbody]
+          set: [atoms-pushed-optional-breaktoprecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktoprecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktoprecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktoprecbody, record-entry-pushed]
-  atoms-pushed-breaktoprecbody:
+      set: [atoms-pushed-optional-breaktoprecbody, record-entry-pushed]
+  atoms-pushed-optional-breaktoprecbody:
     - include: top-recursive-body-pushed
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoprecbody]
+          set: [atoms-pushed-optional-breaktoprecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1028,17 +1028,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktoprecbody]
+      set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1046,52 +1046,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktoprecbody]
+          set: [atoms-pushed-optional-breaktoprecbody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktoprecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktoprecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktoprecbody, record-entry-pushed]
+      set: [atoms-pushed-optional-breaktoprecbody, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breaktoprecbody, record-proj-label-pushed]
-  atoms-pushed-mandatory-breaktuple:
+      set: [atoms-pushed-optional-breaktoprecbody, record-proj-label-pushed]
+  atoms-pushed-breaktuple:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktuple]
+          set: [atoms-pushed-optional-breaktuple]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1099,17 +1099,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1117,19 +1117,19 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktuple]
+          set: [atoms-pushed-optional-breaktuple]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktuple, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktuple, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktuple, record-entry-pushed]
-  atoms-pushed-breaktuple:
+      set: [atoms-pushed-optional-breaktuple, record-entry-pushed]
+  atoms-pushed-optional-breaktuple:
     - meta_include_prototype: false
     - include: prototype-ignore-rparen
     - match: '\)'
@@ -1140,34 +1140,34 @@ contexts:
       set: [mexpr-pushed-breaktuple]
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktuple]
+          set: [atoms-pushed-optional-breaktuple]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1175,17 +1175,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1193,52 +1193,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaktuple]
+          set: [atoms-pushed-optional-breaktuple]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaktuple, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaktuple, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaktuple, record-entry-pushed]
+      set: [atoms-pushed-optional-breaktuple, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breaktuple, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakseq:
+      set: [atoms-pushed-optional-breaktuple, record-proj-label-pushed]
+  atoms-pushed-breakseq:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakseq]
+          set: [atoms-pushed-optional-breakseq]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1246,17 +1246,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1264,19 +1264,19 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakseq]
+          set: [atoms-pushed-optional-breakseq]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakseq, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakseq, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakseq, record-entry-pushed]
-  atoms-pushed-breakseq:
+      set: [atoms-pushed-optional-breakseq, record-entry-pushed]
+  atoms-pushed-optional-breakseq:
     - meta_include_prototype: false
     - include: prototype-ignore-rsquare
     - match: '\]'
@@ -1287,34 +1287,34 @@ contexts:
       set: [mexpr-pushed-breakseq]
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakseq]
+          set: [atoms-pushed-optional-breakseq]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1322,17 +1322,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1340,52 +1340,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakseq]
+          set: [atoms-pushed-optional-breakseq]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakseq, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakseq, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakseq, record-entry-pushed]
+      set: [atoms-pushed-optional-breakseq, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakseq, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakrecordcontinued:
+      set: [atoms-pushed-optional-breakseq, record-proj-label-pushed]
+  atoms-pushed-breakrecordcontinued:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordcontinued]
+          set: [atoms-pushed-optional-breakrecordcontinued]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1393,17 +1393,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1411,19 +1411,19 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordcontinued]
+          set: [atoms-pushed-optional-breakrecordcontinued]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordcontinued, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordcontinued, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordcontinued, record-entry-pushed]
-  atoms-pushed-breakrecordcontinued:
+      set: [atoms-pushed-optional-breakrecordcontinued, record-entry-pushed]
+  atoms-pushed-optional-breakrecordcontinued:
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
@@ -1434,34 +1434,34 @@ contexts:
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordcontinued]
+          set: [atoms-pushed-optional-breakrecordcontinued]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1469,17 +1469,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordcontinued]
+      set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1487,52 +1487,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordcontinued]
+          set: [atoms-pushed-optional-breakrecordcontinued]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordcontinued, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordcontinued, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordcontinued, record-entry-pushed]
+      set: [atoms-pushed-optional-breakrecordcontinued, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakrecordcontinued, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakrecordwith:
+      set: [atoms-pushed-optional-breakrecordcontinued, record-proj-label-pushed]
+  atoms-pushed-breakrecordwith:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordwith]
+          set: [atoms-pushed-optional-breakrecordwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1540,17 +1540,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1558,52 +1558,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordwith]
+          set: [atoms-pushed-optional-breakrecordwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordwith, record-entry-pushed]
-  atoms-pushed-breakrecordwith:
+      set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]
+  atoms-pushed-optional-breakrecordwith:
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
       set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordwith]
+          set: [atoms-pushed-optional-breakrecordwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1611,17 +1611,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordwith]
+      set: [atoms-pushed-optional-breakrecordwith]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1629,52 +1629,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordwith]
+          set: [atoms-pushed-optional-breakrecordwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordwith, record-entry-pushed]
+      set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakrecordwith, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakrecordend:
+      set: [atoms-pushed-optional-breakrecordwith, record-proj-label-pushed]
+  atoms-pushed-breakrecordend:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordend]
+          set: [atoms-pushed-optional-breakrecordend]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1682,17 +1682,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1700,19 +1700,19 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordend]
+          set: [atoms-pushed-optional-breakrecordend]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordend, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordend, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordend, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordend, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordend, record-entry-pushed]
-  atoms-pushed-breakrecordend:
+      set: [atoms-pushed-optional-breakrecordend, record-entry-pushed]
+  atoms-pushed-optional-breakrecordend:
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
@@ -1720,34 +1720,34 @@ contexts:
       pop: true
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordend]
+          set: [atoms-pushed-optional-breakrecordend]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1755,17 +1755,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakrecordend]
+      set: [atoms-pushed-optional-breakrecordend]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1773,52 +1773,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakrecordend]
+          set: [atoms-pushed-optional-breakrecordend]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakrecordend, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordend, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakrecordend, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordend, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakrecordend, record-entry-pushed]
+      set: [atoms-pushed-optional-breakrecordend, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakrecordend, record-proj-label-pushed]
-  atoms-pushed-mandatory-breaksembody:
+      set: [atoms-pushed-optional-breakrecordend, record-proj-label-pushed]
+  atoms-pushed-breaksembody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaksembody]
+          set: [atoms-pushed-optional-breaksembody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1826,17 +1826,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1844,50 +1844,50 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaksembody]
+          set: [atoms-pushed-optional-breaksembody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaksembody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaksembody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaksembody, record-entry-pushed]
-  atoms-pushed-breaksembody:
+      set: [atoms-pushed-optional-breaksembody, record-entry-pushed]
+  atoms-pushed-optional-breaksembody:
     - include: top-lang-sem-body-pushed
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaksembody]
+          set: [atoms-pushed-optional-breaksembody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -1895,17 +1895,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breaksembody]
+      set: [atoms-pushed-optional-breaksembody]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -1913,123 +1913,52 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breaksembody]
+          set: [atoms-pushed-optional-breaksembody]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breaksembody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breaksembody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breaksembody, record-entry-pushed]
+      set: [atoms-pushed-optional-breaksembody, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breaksembody, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakin:
-    - match: '[(]\s*[)]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
-    - match: '[{]\s*[}]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
-    - match: '\[\s*\]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
-    - match: '\b(true|false)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
-    - match: '\b(never)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
-    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
-      scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakin]
-    - match: '(-)?[0-9][.]([0-9])*'
-      scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakin]
-    - match: '(-)?[0-9]+'
-      scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakin]
-    - match: '(")'
-      scope: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakin]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '('')({{escapechar}})('')'
-      captures:
-        1: string.quote.single.mcore
-        2: constant.character.escape.mcore
-        3: string.quote.single.mcore
-      set: [atoms-pushed-breakin]
-    - match: '('')([^''\\])('')'
-      scope: string.quote.single.mcore
-      set: [atoms-pushed-breakin]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
-      captures:
-        1: support.function.builtin.ident.mcore
-        2: invalid.illegal.reserved.ident.mcore
-        3: keyword.other.ignored.ident.mcore
-        4: other.ident.mcore
-      set: [atoms-pushed-breakin]
-    - match: '(#(?:var|con|type))(")'
-      captures:
-        1: keyword.directive.identifier.mcore
-        2: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakin]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '\('
-      scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakin, mexpr-pushed-breaktuple]
-    - match: '\['
-      scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakin, mexpr-pushed-breakseq]
-    - match: '\{'
-      scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakin, record-entry-pushed]
+      set: [atoms-pushed-optional-breaksembody, record-proj-label-pushed]
   atoms-pushed-breakin:
-    - match: '\b(in)\b'
-      scope: keyword.other.in.mcore
-      pop: true
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakin]
+          set: [atoms-pushed-optional-breakin]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -2037,17 +1966,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakin]
+      set: [atoms-pushed-optional-breakin]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -2055,123 +1984,121 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakin]
+          set: [atoms-pushed-optional-breakin]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakin, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakin, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakin, record-entry-pushed]
+      set: [atoms-pushed-optional-breakin, record-entry-pushed]
+  atoms-pushed-optional-breakin:
+    - include: directive-in-pushed
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '\b(true|false)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '\b(never)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '(-)?[0-9][.]([0-9])*'
+      scope: constant.numeric.float.normal.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakin]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      set: [atoms-pushed-optional-breakin]
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakin]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [atoms-pushed-optional-breakin, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakin, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakthen:
-    - match: '[(]\s*[)]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '[{]\s*[}]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '\[\s*\]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '\b(true|false)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '\b(never)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
-      scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '(-)?[0-9][.]([0-9])*'
-      scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '(-)?[0-9]+'
-      scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '(")'
-      scope: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakthen]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '('')({{escapechar}})('')'
-      captures:
-        1: string.quote.single.mcore
-        2: constant.character.escape.mcore
-        3: string.quote.single.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '('')([^''\\])('')'
-      scope: string.quote.single.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
-      captures:
-        1: support.function.builtin.ident.mcore
-        2: invalid.illegal.reserved.ident.mcore
-        3: keyword.other.ignored.ident.mcore
-        4: other.ident.mcore
-      set: [atoms-pushed-breakthen]
-    - match: '(#(?:var|con|type))(")'
-      captures:
-        1: keyword.directive.identifier.mcore
-        2: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakthen]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '\('
-      scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakthen, mexpr-pushed-breaktuple]
-    - match: '\['
-      scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakthen, mexpr-pushed-breakseq]
-    - match: '\{'
-      scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakthen, record-entry-pushed]
+      set: [atoms-pushed-optional-breakin, record-proj-label-pushed]
   atoms-pushed-breakthen:
-    - match: '\b(then)\b'
-      scope: keyword.other.then.mcore
-      pop: true
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakthen]
+          set: [atoms-pushed-optional-breakthen]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -2179,17 +2106,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakthen]
+      set: [atoms-pushed-optional-breakthen]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -2197,123 +2124,121 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakthen]
+          set: [atoms-pushed-optional-breakthen]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakthen, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakthen, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakthen, record-entry-pushed]
+      set: [atoms-pushed-optional-breakthen, record-entry-pushed]
+  atoms-pushed-optional-breakthen:
+    - include: directive-then-pushed
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '\b(true|false)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '\b(never)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '(-)?[0-9][.]([0-9])*'
+      scope: constant.numeric.float.normal.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakthen]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      set: [atoms-pushed-optional-breakthen]
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakthen]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [atoms-pushed-optional-breakthen, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakthen, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakelse:
-    - match: '[(]\s*[)]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '[{]\s*[}]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '\[\s*\]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '\b(true|false)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '\b(never)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
-      scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '(-)?[0-9][.]([0-9])*'
-      scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '(-)?[0-9]+'
-      scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '(")'
-      scope: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakelse]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '('')({{escapechar}})('')'
-      captures:
-        1: string.quote.single.mcore
-        2: constant.character.escape.mcore
-        3: string.quote.single.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '('')([^''\\])('')'
-      scope: string.quote.single.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
-      captures:
-        1: support.function.builtin.ident.mcore
-        2: invalid.illegal.reserved.ident.mcore
-        3: keyword.other.ignored.ident.mcore
-        4: other.ident.mcore
-      set: [atoms-pushed-breakelse]
-    - match: '(#(?:var|con|type))(")'
-      captures:
-        1: keyword.directive.identifier.mcore
-        2: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakelse]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '\('
-      scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakelse, mexpr-pushed-breaktuple]
-    - match: '\['
-      scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakelse, mexpr-pushed-breakseq]
-    - match: '\{'
-      scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakelse, record-entry-pushed]
+      set: [atoms-pushed-optional-breakthen, record-proj-label-pushed]
   atoms-pushed-breakelse:
-    - match: '\b(else)\b'
-      scope: keyword.other.else.mcore
-      pop: true
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakelse]
+          set: [atoms-pushed-optional-breakelse]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -2321,17 +2246,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakelse]
+      set: [atoms-pushed-optional-breakelse]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -2339,123 +2264,121 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakelse]
+          set: [atoms-pushed-optional-breakelse]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakelse, record-entry-pushed]
+      set: [atoms-pushed-optional-breakelse, record-entry-pushed]
+  atoms-pushed-optional-breakelse:
+    - include: directive-else-pushed
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '\b(true|false)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '\b(never)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '(-)?[0-9][.]([0-9])*'
+      scope: constant.numeric.float.normal.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakelse]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      set: [atoms-pushed-optional-breakelse]
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakelse]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [atoms-pushed-optional-breakelse, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakelse, record-proj-label-pushed]
-  atoms-pushed-mandatory-breakwith:
-    - match: '[(]\s*[)]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '[{]\s*[}]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '\[\s*\]'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '\b(true|false)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '\b(never)\b'
-      scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
-      scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '(-)?[0-9][.]([0-9])*'
-      scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '(-)?[0-9]+'
-      scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '(")'
-      scope: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakwith]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '('')({{escapechar}})('')'
-      captures:
-        1: string.quote.single.mcore
-        2: constant.character.escape.mcore
-        3: string.quote.single.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '('')([^''\\])('')'
-      scope: string.quote.single.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
-      captures:
-        1: support.function.builtin.ident.mcore
-        2: invalid.illegal.reserved.ident.mcore
-        3: keyword.other.ignored.ident.mcore
-        4: other.ident.mcore
-      set: [atoms-pushed-breakwith]
-    - match: '(#(?:var|con|type))(")'
-      captures:
-        1: keyword.directive.identifier.mcore
-        2: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          set: [atoms-pushed-breakwith]
-        - include: stringsymbol
-        - meta_include_prototype: false
-    - match: '\('
-      scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakwith, mexpr-pushed-breaktuple]
-    - match: '\['
-      scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakwith, mexpr-pushed-breakseq]
-    - match: '\{'
-      scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakwith, record-entry-pushed]
+      set: [atoms-pushed-optional-breakelse, record-proj-label-pushed]
   atoms-pushed-breakwith:
-    - match: '\b(with)\b'
-      scope: keyword.other.with.mcore
-      pop: true
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '[{]\s*[}]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '\[\s*\]'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '\b(true|false)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '\b(never)\b'
       scope: constant.language.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
       scope: constant.numeric.float.stdform.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '(-)?[0-9][.]([0-9])*'
       scope: constant.numeric.float.normal.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '(")'
       scope: string.quote.double.mcore
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakwith]
+          set: [atoms-pushed-optional-breakwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '('')({{escapechar}})('')'
@@ -2463,17 +2386,17 @@ contexts:
         1: string.quote.single.mcore
         2: constant.character.escape.mcore
         3: string.quote.single.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
-      set: [atoms-pushed-breakwith]
+      set: [atoms-pushed-optional-breakwith]
     - match: '(#(?:var|con|type))(")'
       captures:
         1: keyword.directive.identifier.mcore
@@ -2481,21 +2404,90 @@ contexts:
       set:
         - match: '(")'
           scope: string.quote.double.mcore
-          set: [atoms-pushed-breakwith]
+          set: [atoms-pushed-optional-breakwith]
         - include: stringsymbol
         - meta_include_prototype: false
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-breakwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-breakwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq]
     - match: '\{'
       scope: symbol.lcurly.mcore
-      set: [atoms-pushed-breakwith, record-entry-pushed]
+      set: [atoms-pushed-optional-breakwith, record-entry-pushed]
+  atoms-pushed-optional-breakwith:
+    - include: directive-with-pushed
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '\b(true|false)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '\b(never)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '(-)?[0-9][.]([0-9])*'
+      scope: constant.numeric.float.normal.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakwith]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+      set: [atoms-pushed-optional-breakwith]
+    - match: '(#(?:var|con|type))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakwith]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [atoms-pushed-optional-breakwith, record-entry-pushed]
     - match: '[.]'
       scope: symbol.dot.mcore
-      set: [atoms-pushed-breakwith, record-proj-label-pushed]
+      set: [atoms-pushed-optional-breakwith, record-proj-label-pushed]
 
   ###                  ###
   ### Type Expressions ###
@@ -3897,4 +3889,12 @@ contexts:
   directive-then-pushed:
     - match: '\b(then)\b'
       scope: keyword.other.then.mcore
+      pop: true
+  directive-else-pushed:
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
+      pop: true
+  directive-with-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
       pop: true

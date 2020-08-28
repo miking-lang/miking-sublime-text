@@ -262,68 +262,68 @@ contexts:
   ###                   ###
   mexpr-pushed-breaktoplevel:
     #%%IMPORT=mexpr("mexpr-pushed-breaktoplevel")
-    - include: atoms-pushed-mandatory-breaktoplevel
+    - include: atoms-pushed-breaktoplevel
   mexpr-pushed-breakrecbody:
     #%%IMPORT=mexpr("mexpr-pushed-breakrecbody")
-    - include: atoms-pushed-mandatory-breakrecbody
+    - include: atoms-pushed-breakrecbody
   mexpr-pushed-breaktoprecbody:
     #%%IMPORT=mexpr("mexpr-pushed-breaktoprecbody")
-    - include: atoms-pushed-mandatory-breaktoprecbody
+    - include: atoms-pushed-breaktoprecbody
   mexpr-pushed-breaktuple:
     #%%IMPORT=mexpr("mexpr-pushed-breaktuple")
-    - include: atoms-pushed-mandatory-breaktuple
+    - include: atoms-pushed-breaktuple
   mexpr-pushed-breakseq:
     #%%IMPORT=mexpr("mexpr-pushed-breakseq")
-    - include: atoms-pushed-mandatory-breakseq
+    - include: atoms-pushed-breakseq
   mexpr-pushed-breakrecordcontinued:
     #%%IMPORT=mexpr("mexpr-pushed-breakrecordcontinued")
-    - include: atoms-pushed-mandatory-breakrecordcontinued
+    - include: atoms-pushed-breakrecordcontinued
   mexpr-pushed-breakrecordwith:
     #%%IMPORT=mexpr("mexpr-pushed-breakrecordwith")
-    - include: atoms-pushed-mandatory-breakrecordwith
+    - include: atoms-pushed-breakrecordwith
   mexpr-pushed-breakrecordend:
     #%%IMPORT=mexpr("mexpr-pushed-breakrecordend")
-    - include: atoms-pushed-mandatory-breakrecordend
+    - include: atoms-pushed-breakrecordend
   mexpr-pushed-breaksembody:
     #%%IMPORT=mexpr("mexpr-pushed-breaksembody")
-    - include: atoms-pushed-mandatory-breaksembody
+    - include: atoms-pushed-breaksembody
   mexpr-pushed-breakin:
     #%%IMPORT=mexpr("mexpr-pushed-breakin")
-    - include: atoms-pushed-mandatory-breakin
+    - include: atoms-pushed-breakin
   mexpr-pushed-breakthen:
     #%%IMPORT=mexpr("mexpr-pushed-breakthen")
-    - include: atoms-pushed-mandatory-breakthen
+    - include: atoms-pushed-breakthen
   mexpr-pushed-breakelse:
     #%%IMPORT=mexpr("mexpr-pushed-breakelse")
-    - include: atoms-pushed-mandatory-breakelse
+    - include: atoms-pushed-breakelse
   mexpr-pushed-breakwith:
     #%%IMPORT=mexpr("mexpr-pushed-breakwith")
-    - include: atoms-pushed-mandatory-breakwith
+    - include: atoms-pushed-breakwith
 
   ###             ###
   ### MExpr Atoms ###
   ###             ###
-  atoms-pushed-mandatory-breaktoplevel:
-    #%%IMPORT=atoms("atoms-pushed-breaktoplevel")
   atoms-pushed-breaktoplevel:
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktoplevel")
+  atoms-pushed-optional-breaktoplevel:
     - include: top-level-pushed
-    #%%IMPORT=atoms("atoms-pushed-breaktoplevel")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktoplevel")
-  atoms-pushed-mandatory-breakrecbody:
-    #%%IMPORT=atoms("atoms-pushed-breakrecbody")
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktoplevel")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breaktoplevel")
   atoms-pushed-breakrecbody:
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecbody")
+  atoms-pushed-optional-breakrecbody:
     - include: recursive-body-pushed
-    #%%IMPORT=atoms("atoms-pushed-breakrecbody")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecbody")
-  atoms-pushed-mandatory-breaktoprecbody:
-    #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecbody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakrecbody")
   atoms-pushed-breaktoprecbody:
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktoprecbody")
+  atoms-pushed-optional-breaktoprecbody:
     - include: top-recursive-body-pushed
-    #%%IMPORT=atoms("atoms-pushed-breaktoprecbody")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktoprecbody")
-  atoms-pushed-mandatory-breaktuple:
-    #%%IMPORT=atoms("atoms-pushed-breaktuple")
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktoprecbody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breaktoprecbody")
   atoms-pushed-breaktuple:
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktuple")
+  atoms-pushed-optional-breaktuple:
     - meta_include_prototype: false
     - include: prototype-ignore-rparen
     - match: '\)'
@@ -332,11 +332,11 @@ contexts:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breaktuple]
-    #%%IMPORT=atoms("atoms-pushed-breaktuple")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breaktuple")
-  atoms-pushed-mandatory-breakseq:
-    #%%IMPORT=atoms("atoms-pushed-breakseq")
+    #%%IMPORT=atoms("atoms-pushed-optional-breaktuple")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breaktuple")
   atoms-pushed-breakseq:
+    #%%IMPORT=atoms("atoms-pushed-optional-breakseq")
+  atoms-pushed-optional-breakseq:
     - meta_include_prototype: false
     - include: prototype-ignore-rsquare
     - match: '\]'
@@ -345,11 +345,11 @@ contexts:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakseq]
-    #%%IMPORT=atoms("atoms-pushed-breakseq")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakseq")
-  atoms-pushed-mandatory-breakrecordcontinued:
-    #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakseq")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakseq")
   atoms-pushed-breakrecordcontinued:
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordcontinued")
+  atoms-pushed-optional-breakrecordcontinued:
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
@@ -358,64 +358,56 @@ contexts:
     - match: '[,]'
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
-    #%%IMPORT=atoms("atoms-pushed-breakrecordcontinued")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordcontinued")
-  atoms-pushed-mandatory-breakrecordwith:
-    #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordcontinued")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakrecordcontinued")
   atoms-pushed-breakrecordwith:
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordwith")
+  atoms-pushed-optional-breakrecordwith:
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
       set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
-    #%%IMPORT=atoms("atoms-pushed-breakrecordwith")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordwith")
-  atoms-pushed-mandatory-breakrecordend:
-    #%%IMPORT=atoms("atoms-pushed-breakrecordend")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordwith")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakrecordwith")
   atoms-pushed-breakrecordend:
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordend")
+  atoms-pushed-optional-breakrecordend:
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
-    #%%IMPORT=atoms("atoms-pushed-breakrecordend")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakrecordend")
-  atoms-pushed-mandatory-breaksembody:
-    #%%IMPORT=atoms("atoms-pushed-breaksembody")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakrecordend")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakrecordend")
   atoms-pushed-breaksembody:
+    #%%IMPORT=atoms("atoms-pushed-optional-breaksembody")
+  atoms-pushed-optional-breaksembody:
     - include: top-lang-sem-body-pushed
-    #%%IMPORT=atoms("atoms-pushed-breaksembody")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breaksembody")
-  atoms-pushed-mandatory-breakin:
-    #%%IMPORT=atoms("atoms-pushed-breakin")
+    #%%IMPORT=atoms("atoms-pushed-optional-breaksembody")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breaksembody")
   atoms-pushed-breakin:
-    - match: '\b(in)\b'
-      scope: keyword.other.in.mcore
-      pop: true
-    #%%IMPORT=atoms("atoms-pushed-breakin")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakin")
-  atoms-pushed-mandatory-breakthen:
-    #%%IMPORT=atoms("atoms-pushed-breakthen")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakin")
+  atoms-pushed-optional-breakin:
+    - include: directive-in-pushed
+    #%%IMPORT=atoms("atoms-pushed-optional-breakin")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakin")
   atoms-pushed-breakthen:
-    - match: '\b(then)\b'
-      scope: keyword.other.then.mcore
-      pop: true
-    #%%IMPORT=atoms("atoms-pushed-breakthen")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakthen")
-  atoms-pushed-mandatory-breakelse:
-    #%%IMPORT=atoms("atoms-pushed-breakelse")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakthen")
+  atoms-pushed-optional-breakthen:
+    - include: directive-then-pushed
+    #%%IMPORT=atoms("atoms-pushed-optional-breakthen")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakthen")
   atoms-pushed-breakelse:
-    - match: '\b(else)\b'
-      scope: keyword.other.else.mcore
-      pop: true
-    #%%IMPORT=atoms("atoms-pushed-breakelse")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakelse")
-  atoms-pushed-mandatory-breakwith:
-    #%%IMPORT=atoms("atoms-pushed-breakwith")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakelse")
+  atoms-pushed-optional-breakelse:
+    - include: directive-else-pushed
+    #%%IMPORT=atoms("atoms-pushed-optional-breakelse")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakelse")
   atoms-pushed-breakwith:
-    - match: '\b(with)\b'
-      scope: keyword.other.with.mcore
-      pop: true
-    #%%IMPORT=atoms("atoms-pushed-breakwith")
-    #%%IMPORT=atoms-nonfst("atoms-pushed-breakwith")
+    #%%IMPORT=atoms("atoms-pushed-optional-breakwith")
+  atoms-pushed-optional-breakwith:
+    - include: directive-with-pushed
+    #%%IMPORT=atoms("atoms-pushed-optional-breakwith")
+    #%%IMPORT=atoms-nonfst("atoms-pushed-optional-breakwith")
 
   ###                  ###
   ### Type Expressions ###
@@ -844,4 +836,12 @@ contexts:
   directive-then-pushed:
     - match: '\b(then)\b'
       scope: keyword.other.then.mcore
+      pop: true
+  directive-else-pushed:
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
+      pop: true
+  directive-with-pushed:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
       pop: true
