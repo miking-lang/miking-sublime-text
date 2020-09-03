@@ -62,7 +62,7 @@ contexts:
   ### Comments ###
   ###          ###
   comment:
-    - match: '(--|//)'
+    - match: '--'
       scope: comment.line.mcore
       push:
         - match: '\n'
@@ -91,12 +91,12 @@ contexts:
   ###                               ###
   top-include:
     - match: '\b(include)\b'
-      scope: keyword.directive.include.mcore
+      scope: keyword.control.import.include.mcore
       push: [string-pushed]
 
   top-include-pushed:
     - match: '\b(include)\b'
-      scope: keyword.directive.include.mcore
+      scope: keyword.control.import.include.mcore
       set: [string-pushed]
 
   ###                            ###
@@ -134,7 +134,7 @@ contexts:
 
   top-lang-end-pushed:
     - match: '\b(end)\b'
-      scope: keyword.directive.end.mcore
+      scope: keyword.control.end.mcore
       pop: true
 
   top-lang-syn-entry-pushed:
