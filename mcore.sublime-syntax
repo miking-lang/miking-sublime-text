@@ -9,7 +9,8 @@ variables:
   builtin_ident: '(?:unit|never|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
   reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|end|mexpr)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
-  ident: '(?:[a-zA-Z_][a-zA-Z_0-9]*)'
+  ident: '(?:[a-z_][a-zA-Z_0-9]*)'
+  conident: '(?:[A-Z][a-zA-Z_0-9]*)'
   escapechar: '(?:\\(?:[?abfnrtv"\\]|''))'
 
 # Context parsing
@@ -706,12 +707,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktoplevel]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -775,12 +777,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktoplevel]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -846,12 +849,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecbody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -915,12 +919,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecbody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -986,12 +991,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1055,12 +1061,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1126,12 +1133,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktuple]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1202,12 +1210,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaktuple]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1273,12 +1282,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakseq]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1349,12 +1359,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakseq]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1420,12 +1431,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1496,12 +1508,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1567,12 +1580,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordwith]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordwith]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1638,12 +1652,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordwith]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordwith]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1709,12 +1724,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordend]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordend]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1782,12 +1798,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakrecordend]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordend]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1853,12 +1870,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaksembody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaksembody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1922,12 +1940,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breaksembody]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaksembody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -1993,12 +2012,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakin]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2062,12 +2082,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakin]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2133,12 +2154,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakthen]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakthen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2202,12 +2224,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakthen]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakthen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2273,12 +2296,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakelse]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakelse]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2342,12 +2366,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakelse]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakelse]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2413,12 +2438,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakwith]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakwith]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2482,12 +2508,13 @@ contexts:
     - match: '('')([^''\\])('')'
       scope: string.quote.single.mcore
       set: [atoms-pushed-optional-breakwith]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakwith]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2517,13 +2544,14 @@ contexts:
   ###                  ###
   ### Note: The include at the end of each typeexpr case is to account for type application (e.g. Option a)
   typeexpr-pushed-breakrparen:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakrparen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2561,13 +2589,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrparen
   typeexpr-pushed-breakeq:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakeq]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2603,13 +2632,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakeq
   typeexpr-pushed-breakin:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakin]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2645,13 +2675,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakin
   typeexpr-pushed-breakdot:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakdot]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2687,13 +2718,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakdot
   typeexpr-pushed-breakrsquare:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakrsquare]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2731,13 +2763,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrsquare
   typeexpr-pushed-breaktuple:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrowcomma-or-breakrparen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2778,13 +2811,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breaktuple
   typeexpr-pushed-breakrecord:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrowcomma-or-breakrcurly]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2825,13 +2859,14 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrecord
   typeexpr-pushed-breaksynbody:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breaksynbody]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2865,13 +2900,14 @@ contexts:
     - include: top-lang-syn-body-pushed
     - include: typeexpr-pushed-breaksynbody
   typeexpr-pushed-breaktoplevel:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: keyword.directive.typename.mcore
         5: other.ident.mcore
+        6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breaktoplevel]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -2970,12 +3006,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakrightarrow-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrightarrow]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3042,12 +3079,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakrightarrow-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrightarrow]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3128,12 +3166,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakthen-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakthen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3200,12 +3239,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakthen-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakthen]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3286,12 +3326,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakseq-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3360,12 +3401,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakseq-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakseq]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3457,12 +3499,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breaktuple-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3531,12 +3574,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breaktuple-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breaktuple]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3628,12 +3672,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakrecord-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrecord]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3702,12 +3747,13 @@ contexts:
     - match: '(-)?[0-9]+'
       scope: constant.numeric.integer.mcore
       set: [pattern-pushed-breakrecord-cond]
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrecord]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3810,12 +3856,13 @@ contexts:
   ### Record Body ###
   ###             ###
   record-entry-pushed:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [record-eqorwith-pushed]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -3868,12 +3915,13 @@ contexts:
   ### Identifier Tokens ###
   ###                   ###
   identifier-pushed:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       pop: true
     - match: '(#(?:var|con|type|label))(")'
       captures:

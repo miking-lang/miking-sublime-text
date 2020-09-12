@@ -21,12 +21,13 @@
 - match: '(-)?[0-9]+'
   scope: constant.numeric.integer.mcore
   set: [%%%USEARG=TerminatorCase]
-- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}|({{conident}})))\b'
   captures:
     1: support.function.builtin.ident.mcore
     2: invalid.illegal.reserved.ident.mcore
     3: keyword.other.ignored.ident.mcore
     4: other.ident.mcore
+    5: support.type.conident.mcore
   set: [%%%USEARG=LhsConcatCase]
 - match: '(#(?:var|con|type))(")'
   captures:

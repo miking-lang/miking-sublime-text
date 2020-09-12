@@ -9,7 +9,8 @@ variables:
   builtin_ident: '(?:unit|never|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
   reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|end|mexpr)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
-  ident: '(?:[a-zA-Z_][a-zA-Z_0-9]*)'
+  ident: '(?:[a-z_][a-zA-Z_0-9]*)'
+  conident: '(?:[A-Z][a-zA-Z_0-9]*)'
   escapechar: '(?:\\(?:[?abfnrtv"\\]|''))'
 
 # Context parsing
@@ -757,12 +758,13 @@ contexts:
   ### Record Body ###
   ###             ###
   record-entry-pushed:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       set: [record-eqorwith-pushed]
     - match: '(#(?:var|con|type))(")'
       captures:
@@ -815,12 +817,13 @@ contexts:
   ### Identifier Tokens ###
   ###                   ###
   identifier-pushed:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}}))\b'
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
         2: invalid.illegal.reserved.ident.mcore
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
+        5: support.type.conident.mcore
       pop: true
     - match: '(#(?:var|con|type|label))(")'
       captures:
