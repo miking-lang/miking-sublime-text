@@ -1,0 +1,21 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
+  captures:
+    1: support.function.builtin.ident.mcore
+    2: invalid.illegal.reserved.ident.mcore
+    3: keyword.other.ignored.ident.mcore
+    4: keyword.directive.typename.mcore
+    5: other.ident.mcore
+    6: support.type.conident.mcore
+  set: [%%%USEARG=PopType]
+- match: '(#(?:var|con|type|label))(")'
+  captures:
+    1: keyword.directive.identifier.mcore
+    2: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=PopType]
+    - include: stringsymbol
+    - meta_include_prototype: false

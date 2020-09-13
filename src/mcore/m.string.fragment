@@ -1,0 +1,10 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '(")'
+  scope: string.quote.double.mcore
+  set:
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set: [%%%USEARG=PopType]
+    - include: stringsymbol
+    - meta_include_prototype: false

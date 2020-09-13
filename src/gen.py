@@ -8,7 +8,7 @@ import sys
 import tempfile
 
 p_templatefname = regex.compile(r"(?P<filename>(?P<name>\w+)[.]sublime-syntax-base)")
-p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[-a-zA-Z]+)[(]\s*(?:\"(?P<args>[^\"]+)\"\s*(?:[,]\s*\"(?P<args>[^\"]+)\"\s*)*)?[)])")
+p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[-a-zA-Z.]+)[(]\s*(?:\"(?P<args>[^\"]+)\"\s*(?:[,]\s*\"(?P<args>[^\"]+)\"\s*)*)?[)])")
 p_args = regex.compile(r"(?P<full>#%%ARGS=[(](?:(?P<args>[-a-zA-Z]+)(?:[,](?P<args>[-a-zA-Z]+))*)?[)])")
 p_usearg = regex.compile(r"(?P<full>(#|%)%%USEARG=(?P<name>[-a-zA-Z]+))")
 
@@ -55,13 +55,12 @@ def scan_template(outfile, langdir, filename):
 				fragfilename = m.group("fragment") + ".fragment"
 				fragargs = m.captures("args")
 
-				scan_fragment(outfile, langdir, fragfilename, fragargs, indent)
+				scan_fragment(outfile, langdir, fragfilename, fragargs, [fragfilename], indent)
 			else:
 				outfile.write(line)
 
-
 # Scan a *.fragment file
-def scan_fragment(outfile, langdir, filename, args=[], indent=0):
+def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
 	filepath = os.path.join(langdir, filename)
 
 	with open(filepath, "r") as f:
@@ -99,8 +98,21 @@ def scan_fragment(outfile, langdir, filename, args=[], indent=0):
 					
 					line = line.replace(m.group("full"), argconv[argname], 1)
 				
-				line = (" " * indent) + line + "\n"
-				outfile.write(line)
+
+				# Check if replaced line is an import statement
+				m = p_import.match(line.strip())
+				if m is not None:
+					imp_indent = line.find(m.group("full"))
+					imp_name = m.group("fragment") + ".fragment"
+					imp_args = m.captures("args")
+
+					if imp_name in scanned:
+						fragerror("Import loop detected")
+
+					scan_fragment(outfile, langdir, imp_name, imp_args, scanned + [imp_name], indent + imp_indent)
+				else:
+					line = (" " * indent) + line + "\n"
+					outfile.write(line)
 
 
 if __name__ == '__main__':

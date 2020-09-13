@@ -1,0 +1,30 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '[{]\s*[}]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '\[\s*\]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '\b(true|false)\b'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+- match: '\b(never)\b'
+  scope: constant.language.mcore
+  set: [%%%USEARG=PopType]
+#%%IMPORT=m.number("%%%USEARG=PopType")
+#%%IMPORT=m.ident("%%%USEARG=PopType")
+#%%IMPORT=m.string("%%%USEARG=PopType")
+#%%IMPORT=m.char("%%%USEARG=PopType")
+- match: '\('
+  scope: symbol.lparen.mcore
+  set: [%%%USEARG=PopType, mexpr-pushed-breaktuple]
+- match: '\['
+  scope: symbol.lsquare.mcore
+  set: [%%%USEARG=PopType, mexpr-pushed-breakseq]
+- match: '\{'
+  scope: symbol.lcurly.mcore
+  set: [%%%USEARG=PopType, record-entry-pushed]

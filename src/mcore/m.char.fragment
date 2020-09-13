@@ -1,0 +1,11 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '('')({{escapechar}})('')'
+  captures:
+    1: string.quote.single.mcore
+    2: constant.character.escape.mcore
+    3: string.quote.single.mcore
+  set: [%%%USEARG=PopType]
+- match: '('')([^''\\])('')'
+  scope: string.quote.single.mcore
+  set: [%%%USEARG=PopType]

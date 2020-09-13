@@ -1,0 +1,30 @@
+%YAML 1.2
+#%%ARGS=(TerminatorCase,SelfCase,LhsConcatCase,RhsConcatCase)
+- match: '[(]\s*[)]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '[{]\s*[}]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+- match: '\[\s*\]'
+  scope: constant.language.mcore
+  set: [%%%USEARG=RhsConcatCase]
+- match: '\b(true|false)\b'
+  scope: constant.language.mcore
+  set: [%%%USEARG=TerminatorCase]
+#%%IMPORT=m.number("%%%USEARG=TerminatorCase")
+#%%IMPORT=m.ident("%%%USEARG=LhsConcatCase")
+#%%IMPORT=m.string("%%%USEARG=RhsConcatCase")
+#%%IMPORT=m.char("%%%USEARG=TerminatorCase")
+- match: '\['
+  scope: symbol.lsquare.mcore
+  set: [%%%USEARG=RhsConcatCase, pattern-pushed-breakseq]
+- match: '\('
+  scope: symbol.lparen.mcore
+  set: [%%%USEARG=TerminatorCase, pattern-pushed-breaktuple]
+- match: '\{'
+  scope: symbol.lcurly.mcore
+  set: [%%%USEARG=TerminatorCase, pattern-pushed-breakrecord, eqoperator-pushed, identifier-pushed]
+- match: '[!]'
+  scope: keyword.operator.not.mcore
+  set: [%%%USEARG=SelfCase]

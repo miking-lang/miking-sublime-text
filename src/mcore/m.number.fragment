@@ -1,0 +1,11 @@
+%YAML 1.2
+#%%ARGS=(PopType)
+- match: '(-)?[0-9]([.][0-9]+)?(e|E)(\+|-)?[0-9]+'
+  scope: constant.numeric.float.stdform.mcore
+  set: [%%%USEARG=PopType]
+- match: '(-)?[0-9][.]([0-9])*'
+  scope: constant.numeric.float.normal.mcore
+  set: [%%%USEARG=PopType]
+- match: '(-)?[0-9]+'
+  scope: constant.numeric.integer.mcore
+  set: [%%%USEARG=PopType]
