@@ -26,4 +26,4 @@
   set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
 - match: '\b(utest)\b'
   scope: keyword.other.utest.mcore
-  set: [%%%USEARG=ThisName, mexpr-pushed-breakin, mexpr-pushed-breakwith]
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakwith]
