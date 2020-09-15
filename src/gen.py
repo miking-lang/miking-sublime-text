@@ -107,7 +107,7 @@ def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
 					imp_args = m.captures("args")
 
 					if imp_name in scanned:
-						fragerror("Import loop detected")
+						fragerror("Import loop detected:" + (" -> ".join(scanned + [imp_name])))
 
 					scan_fragment(outfile, langdir, imp_name, imp_args, scanned + [imp_name], indent + imp_indent)
 				else:
