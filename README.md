@@ -22,8 +22,10 @@ releases as pre-releases.
 
 ## Dependencies
 To build/configure the syntax highlighter, the following software is required:
- - [Python 3](https://www.python.org/)
- - [GNU Make](https://www.gnu.org/software/make/)
+
+ * [Python 3](https://www.python.org/)
+ * [GNU Make](https://www.gnu.org/software/make/)
 
 The following Python 3 packages are required:
- - [regex](https://pypi.org/project/regex/)
+
+ * [regex](https://pypi.org/project/regex/)
