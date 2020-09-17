@@ -80,10 +80,10 @@ contexts:
       scope: comment.line.mcore
 
   comment-block:
-    - match: '[*]-'
+    - match: '[/]-'
       scope: comment.block.mcore
       push:
-        - match: '-[*]'
+        - match: '-[/]'
           scope: comment.block.mcore
           pop: true
         - include: comment-block-content
@@ -94,7 +94,7 @@ contexts:
 
   # This ending is illegal outside of a block comment
   comment-block-illegal:
-    - match: '-[*]'
+    - match: '-[/]'
       scope: invalid.illegal.block.mcore
 
   ###                                             ###
