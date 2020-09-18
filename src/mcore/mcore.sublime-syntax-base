@@ -806,14 +806,7 @@ contexts:
   ### String Symbols ###
   ###                ###
   string-pushed:
-    - match: '(")'
-      scope: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          pop: true
-        - include: stringsymbol
-        - meta_include_prototype: false
+    #%%IMPORT=m.string("")
   stringsymbol:
     - match: '{{escapechar}}'
       scope: constant.character.escape.mcore
@@ -824,24 +817,7 @@ contexts:
   ### Identifier Tokens ###
   ###                   ###
   identifier-pushed:
-    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
-      captures:
-        1: support.function.builtin.ident.mcore
-        2: invalid.illegal.reserved.ident.mcore
-        3: keyword.other.ignored.ident.mcore
-        4: other.ident.mcore
-        5: support.type.conident.mcore
-      pop: true
-    - match: '(#(?:var|con|type|label))(")'
-      captures:
-        1: keyword.directive.identifier.mcore
-        2: string.quote.double.mcore
-      set:
-        - match: '(")'
-          scope: string.quote.double.mcore
-          pop: true
-        - include: stringsymbol
-        - meta_include_prototype: false
+    #%%IMPORT=m.ident("")
 
   ###                ###
   ### Integer Tokens ###

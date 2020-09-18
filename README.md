@@ -25,6 +25,7 @@ To build/configure the syntax highlighter, the following software is required:
 
  * [Python 3](https://www.python.org/)
  * [GNU Make](https://www.gnu.org/software/make/)
+ * [GNU sed](https://www.gnu.org/software/sed/)
 
 The following Python 3 packages are required:
 

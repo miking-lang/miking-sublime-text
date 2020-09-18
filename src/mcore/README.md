@@ -13,3 +13,13 @@ handled by a fragment system where the base file can at specified points
 include fragments with arguments. At the point where the base file includes a
 fragment, it is also able to specify custom arguments, such as how the stack
 should be affected on a match.
+
+## Replace Rules
+The replace rules listed in `replacements.sh` are:
+
+ * `set: []` -> `pop: true`
+
+These should get applied by the top-level makefile by running
+```
+./src/mcore/replacements.sh mcore.sublime-syntax
+```
