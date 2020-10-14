@@ -1,3 +1,5 @@
+![Test](https://github.com/miking-lang/miking-sublime-text/workflows/Test/badge.svg)
+
 # Miking syntax highlighter for Sublime Text
 Provides syntax highlighting for Miking languages in Sublime Text 3. This
 repository is also available through
