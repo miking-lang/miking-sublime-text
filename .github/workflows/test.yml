@@ -22,10 +22,9 @@ jobs:
           if [ -n "\$(git status --porcelain)" ]; then
             git diff;
             git status --porcelain=v1 | grep "^.[^M]";
-            echo -ne "\033[1;31m";
+            echo ""
             echo "Generated files above does not match their checked in counterpart.";
             echo "(Make sure to run make build and commit any changes made by that.)";
-            echo -ne "\033[m";
             exit 1
           fi
           EOF
