@@ -6,8 +6,8 @@ file_extensions:
 scope: source.mcore
 
 variables:
-  builtin_ident: '(?:unit|never|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
-  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr)'
+  builtin_ident: '(?:unit|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
+  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
   ident: '(?:[a-z_][a-zA-Z_0-9]*)'
   conident: '(?:[A-Z][a-zA-Z_0-9]*)'
@@ -283,50 +283,132 @@ contexts:
   ### MExpr Expressions ###
   ###                   ###
   mexpr-pushed-breaktoplevel:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel", "mexpr-pushed-breakcond-breaktoplevel")
     - include: atoms-pushed-breaktoplevel
   mexpr-pushed-breaktoplevel-or-utestusing:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel-or-utestusing")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel-or-utestusing", "mexpr-pushed-breakcond-breaktoplevel-or-utestusing")
     - include: atoms-pushed-breaktoplevel-or-utestusing
   mexpr-pushed-breakrecbody:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecbody")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecbody", "mexpr-pushed-breakcond-breakrecbody")
     - include: atoms-pushed-breakrecbody
   mexpr-pushed-breaktoprecbody:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoprecbody")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoprecbody", "mexpr-pushed-breakcond-breaktoprecbody")
     - include: atoms-pushed-breaktoprecbody
   mexpr-pushed-breaktuple:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breaktuple")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaktuple", "mexpr-pushed-breakcond-breaktuple")
     - include: atoms-pushed-breaktuple
   mexpr-pushed-breakseq:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakseq")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakseq", "mexpr-pushed-breakcond-breakseq")
     - include: atoms-pushed-breakseq
   mexpr-pushed-breakrecordcontinued:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordcontinued")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordcontinued", "mexpr-pushed-breakcond-breakrecordcontinued")
     - include: atoms-pushed-breakrecordcontinued
   mexpr-pushed-breakrecordwith:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordwith")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordwith", "mexpr-pushed-breakcond-breakrecordwith")
     - include: atoms-pushed-breakrecordwith
   mexpr-pushed-breakrecordend:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordend")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordend", "mexpr-pushed-breakcond-breakrecordend")
     - include: atoms-pushed-breakrecordend
   mexpr-pushed-breaksembody:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breaksembody")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaksembody", "mexpr-pushed-breakcond-breaksembody")
     - include: atoms-pushed-breaksembody
   mexpr-pushed-breakin:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakin")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakin", "mexpr-pushed-breakcond-breakin")
     - include: atoms-pushed-breakin
   mexpr-pushed-breakin-or-utestusing:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakin-or-utestusing")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakin-or-utestusing", "mexpr-pushed-breakcond-breakin-or-utestusing")
     - include: atoms-pushed-breakin-or-utestusing
   mexpr-pushed-breakthen:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakthen")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakthen", "mexpr-pushed-breakcond-breakthen")
     - include: atoms-pushed-breakthen
   mexpr-pushed-breakelse:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakelse")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakelse", "mexpr-pushed-breakcond-breakelse")
     - include: atoms-pushed-breakelse
   mexpr-pushed-breakwith:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakwith")
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakwith", "mexpr-pushed-breakcond-breakwith")
     - include: atoms-pushed-breakwith
+  mexpr-pushed-breakswitchcase:
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakswitchcase", "mexpr-pushed-breakcond-breakswitchcase")
+    - include: atoms-pushed-breakswitchcase
+
+  ###                                  ###
+  ### MExpr Immediate Break Conditions ###
+  ###    (i.e. no mexpr in between)    ###
+  ###                                  ###
+  mexpr-pushed-breakcond-breaktoplevel:
+    - include: top-level-pushed
+  mexpr-pushed-breakcond-breaktoplevel-or-utestusing:
+    - include: top-level-pushed
+    - match: '\b(using)\b'
+      scope: keyword.other.using.mcore
+      set: [mexpr-pushed-breaktoplevel]
+  mexpr-pushed-breakcond-breakrecbody:
+    - include: recursive-body-pushed
+  mexpr-pushed-breakcond-breaktoprecbody:
+    - include: top-recursive-body-pushed
+  mexpr-pushed-breakcond-breaktuple:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breaktuple]
+  mexpr-pushed-breakcond-breakseq:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breakseq]
+  mexpr-pushed-breakcond-breakrecordcontinued:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
+  mexpr-pushed-breakcond-breakrecordwith:
+    - match: '\b(with)\b'
+      scope: keyword.other.with.mcore
+      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
+  mexpr-pushed-breakcond-breakrecordend:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+  mexpr-pushed-breakcond-breaksembody:
+    - include: top-lang-sem-body-pushed
+  mexpr-pushed-breakcond-breakin:
+    - include: directive-in-pushed
+  mexpr-pushed-breakcond-breakin-or-utestusing:
+    - include: top-level-pushed
+    - match: '\b(using)\b'
+      scope: keyword.other.using.mcore
+      set: [mexpr-pushed-breaktoplevel]
+    - include: directive-in-pushed
+    - match: '\b(using)\b'
+      scope: keyword.other.using.mcore
+      set: [mexpr-pushed-breakin]
+  mexpr-pushed-breakcond-breakthen:
+    - include: directive-then-pushed
+  mexpr-pushed-breakcond-breakelse:
+    - include: directive-else-pushed
+  mexpr-pushed-breakcond-breakwith:
+    - include: directive-with-pushed
+  mexpr-pushed-breakcond-breakswitchcase:
+    - match: '\b(case)\b'
+      scope: keyword.other.case.mcore
+      set: [mexpr-pushed-breakswitchcase, pattern-pushed-breakthen]
+    - match: '\b(end)\b'
+      scope: keyword.other.end.mcore
+      pop: true
 
   ###             ###
   ### MExpr Atoms ###
@@ -454,6 +536,17 @@ contexts:
     - include: directive-with-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakwith")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakwith")
+  atoms-pushed-breakswitchcase:
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breakswitchcase")
+  atoms-pushed-optional-breakswitchcase:
+    - match: '\b(case)\b'
+      scope: keyword.other.case.mcore
+      set: [mexpr-pushed-breakswitchcase, pattern-pushed-breakthen]
+    - match: '\b(end)\b'
+      scope: keyword.other.end.mcore
+      pop: true
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breakswitchcase")
+    #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakswitchcase")
 
   ###                  ###
   ### Type Expressions ###
@@ -659,6 +752,30 @@ contexts:
   pattern-pushed-breakthen-cond:
     - include: directive-then-pushed
     #%%IMPORT=c.pattern.continuation("pattern-pushed-breakthen")
+  pattern-pushed-breakwhich-then-or-in:
+    #%%IMPORT=c.pattern("pattern-pushed-breakwhich-then-or-in-cond", "pattern-pushed-breakwhich-then-or-in", "pattern-pushed-concatseq-or-breakwhich-then-or-in", "pattern-pushed-concatident-or-breakwhich-then-or-in")
+  pattern-pushed-concatseq-or-breakwhich-then-or-in:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakwhich-then-or-in-cond, patternseq-pushed]
+    - include: pattern-pushed-breakwhich-then-or-in-cond
+    #%%IMPORT=c.pattern("pattern-pushed-breakwhich-then-or-in-cond", "pattern-pushed-breakwhich-then-or-in", "pattern-pushed-concatseq-or-breakwhich-then-or-in", "pattern-pushed-concatident-or-breakwhich-then-or-in")
+  pattern-pushed-concatident-or-breakwhich-then-or-in:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-pushseq-or-breakwhich-then-or-in-cond, identifier-pushed]
+    - include: pattern-pushed-breakwhich-then-or-in-cond
+  pattern-pushed-pushseq-or-breakwhich-then-or-in-cond:
+    - match: '([+][+])'
+      scope: keyword.operator.concat.mcore
+      set: [pattern-pushed-breakwhich-then-or-in-cond, patternseq-pushed]
+    - include: pattern-pushed-breakwhich-then-or-in-cond
+  pattern-pushed-breakwhich-then-or-in-cond:
+    - include: directive-in-pushed
+    - match: '\b(then)\b'
+      scope: keyword.other.then.mcore
+      set: [mexpr-pushed-breakelse]
+    #%%IMPORT=c.pattern.continuation("pattern-pushed-breakwhich-then-or-in")
   pattern-pushed-breakseq:
     #%%IMPORT=c.pattern("pattern-pushed-breakseq-cond", "pattern-pushed-breakseq", "pattern-pushed-concatseq-or-breakseq", "pattern-pushed-concatident-or-breakseq")
   pattern-pushed-concatseq-or-breakseq:

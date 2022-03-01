@@ -1,5 +1,5 @@
 %YAML 1.2
-#%%ARGS=(ThisName)
+#%%ARGS=(ThisName,BreakName)
 - match: '\b(con)\b'
   scope: keyword.other.con.mcore
   set: [%%%USEARG=ThisName, optidenttype-pushed-breakin, identifier-pushed]
@@ -14,7 +14,10 @@
   set: [%%%USEARG=ThisName, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
 - match: '\b(match)\b'
   scope: keyword.other.match.mcore
-  set: [%%%USEARG=ThisName, mexpr-pushed-breakelse, pattern-pushed-breakthen, mexpr-pushed-breakwith]
+  set: [%%%USEARG=ThisName, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
+- match: '\b(switch)\b'
+  scope: keyword.other.switch.mcore
+  set: [%%%USEARG=BreakName, mexpr-pushed-breakswitchcase]
 - match: '\b(recursive)\b'
   scope: keyword.other.recursive.mcore
   set: [%%%USEARG=ThisName, recursive-body-pushed]

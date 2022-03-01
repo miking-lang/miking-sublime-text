@@ -13,7 +13,7 @@
   scope: constant.language.mcore
   set: [%%%USEARG=PopType]
 - match: '\b(never)\b'
-  scope: constant.language.mcore
+  scope: keyword.other.never.mcore
   set: [%%%USEARG=PopType]
 #%%IMPORT=m.number("%%%USEARG=PopType")
 #%%IMPORT=m.ident("%%%USEARG=PopType")
