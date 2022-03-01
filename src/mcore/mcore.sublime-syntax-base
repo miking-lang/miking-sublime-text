@@ -141,25 +141,22 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [top-lang-eqexpr-pushed, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
-    - include: top-level-pushed
+    - include: top-lang-end-or-more-pushed
 
   top-lang-eqexpr-pushed:
       # lang X = ...
     - match: '(\+)'
       scope: keyword.operator.combine.mcore
       set: [top-lang-eqexpr-pushed, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
-    - include: top-level-pushed
+    - include: top-lang-end-or-more-pushed
 
-  top-lang-end-pushed:
+  top-lang-end-or-more-pushed:
     - match: '\b(end)\b'
       scope: keyword.control.end.mcore
       pop: true
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-type-entry-pushed
 
   top-lang-syn-entry-pushed:
     - match: '\b(syn)\b'
@@ -170,9 +167,7 @@ contexts:
     - match: '(\|)'
       scope: keyword.operator.case.mcore
       set: [typeexpr-pushed-breaksynbody, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
+    - include: top-lang-end-or-more-pushed
 
   top-lang-sem-entry-pushed:
     - match: '\b(sem)\b'
@@ -191,9 +186,12 @@ contexts:
     - match: '(\|)'
       scope: keyword.operator.case.mcore
       set: [mexpr-pushed-breaksembody, pattern-pushed-breakrightarrow]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
+    - include: top-lang-end-or-more-pushed
+
+  top-lang-type-entry-pushed:
+    - match: '\b(type)\b'
+      scope: keyword.other.type.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more, eqoperator-pushed, identifier-pushed]
 
   ###                           ###
   ### Top-Level Let Expressions ###
@@ -561,6 +559,14 @@ contexts:
       set: [typeexpr-pushed-breaktoplevel]
     - include: top-level-pushed
     - include: typeexpr-pushed-breaktoplevel
+  typeexpr-pushed-breaklang-end-or-more:
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaklang-end-or-more")
+  typeexpr-pushed-continuearrow-or-breaklang-end-or-more:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more]
+    - include: top-lang-end-or-more-pushed
+    - include: typeexpr-pushed-breaklang-end-or-more
 
   optidenttype-pushed-breakeq:
     - match: '(:)'

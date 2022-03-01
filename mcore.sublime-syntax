@@ -141,25 +141,22 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [top-lang-eqexpr-pushed, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
-    - include: top-level-pushed
+    - include: top-lang-end-or-more-pushed
 
   top-lang-eqexpr-pushed:
       # lang X = ...
     - match: '(\+)'
       scope: keyword.operator.combine.mcore
       set: [top-lang-eqexpr-pushed, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
-    - include: top-level-pushed
+    - include: top-lang-end-or-more-pushed
 
-  top-lang-end-pushed:
+  top-lang-end-or-more-pushed:
     - match: '\b(end)\b'
       scope: keyword.control.end.mcore
       pop: true
+    - include: top-lang-syn-entry-pushed
+    - include: top-lang-sem-entry-pushed
+    - include: top-lang-type-entry-pushed
 
   top-lang-syn-entry-pushed:
     - match: '\b(syn)\b'
@@ -170,9 +167,7 @@ contexts:
     - match: '(\|)'
       scope: keyword.operator.case.mcore
       set: [typeexpr-pushed-breaksynbody, identifier-pushed]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
+    - include: top-lang-end-or-more-pushed
 
   top-lang-sem-entry-pushed:
     - match: '\b(sem)\b'
@@ -191,9 +186,12 @@ contexts:
     - match: '(\|)'
       scope: keyword.operator.case.mcore
       set: [mexpr-pushed-breaksembody, pattern-pushed-breakrightarrow]
-    - include: top-lang-syn-entry-pushed
-    - include: top-lang-sem-entry-pushed
-    - include: top-lang-end-pushed
+    - include: top-lang-end-or-more-pushed
+
+  top-lang-type-entry-pushed:
+    - match: '\b(type)\b'
+      scope: keyword.other.type.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more, eqoperator-pushed, identifier-pushed]
 
   ###                           ###
   ### Top-Level Let Expressions ###
@@ -3288,6 +3286,47 @@ contexts:
       set: [typeexpr-pushed-breaktoplevel]
     - include: top-level-pushed
     - include: typeexpr-pushed-breaktoplevel
+  typeexpr-pushed-breaklang-end-or-more:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: keyword.directive.typename.mcore
+        5: other.ident.mcore
+        6: support.type.conident.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more]
+    - match: '(#(?:var|con|type|label))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more, typeexpr-pushed-breakrsquare]
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more, typeexpr-pushed-breaktuple]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more, typeexpr-pushed-breakrecord, colon-pushed, identifier-pushed]
+  typeexpr-pushed-continuearrow-or-breaklang-end-or-more:
+    - match: '(->)'
+      scope: keyword.operator.right-arrow.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more]
+    - include: top-lang-end-or-more-pushed
+    - include: typeexpr-pushed-breaklang-end-or-more
 
   optidenttype-pushed-breakeq:
     - match: '(:)'
