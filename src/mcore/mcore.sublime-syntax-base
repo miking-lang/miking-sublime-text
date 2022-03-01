@@ -568,6 +568,12 @@ contexts:
     - include: top-lang-end-or-more-pushed
     - include: typeexpr-pushed-breaklang-end-or-more
 
+  optidentifier-pushed-breakdot:
+    #%%IMPORT=m.ident("optidenttype-pushed-breakdot")
+    - match: '[.]'
+      scope: keyword.other.lamdot.mcore
+      pop: true
+
   optidenttype-pushed-breakeq:
     - match: '(:)'
       scope: symbol.colon.mcore

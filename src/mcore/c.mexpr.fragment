@@ -8,7 +8,7 @@
   set: [%%%USEARG=ThisName, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
 - match: '\b(lam)\b'
   scope: keyword.other.lam.mcore
-  set: [%%%USEARG=ThisName, optidenttype-pushed-breakdot, identifier-pushed]
+  set: [%%%USEARG=ThisName, optidentifier-pushed-breakdot]
 - match: '\b(let)\b'
   scope: keyword.other.let.mcore
   set: [%%%USEARG=ThisName, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]

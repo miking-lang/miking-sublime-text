@@ -8,7 +8,7 @@
     4: other.ident.mcore
     5: support.type.conident.mcore
   set: [%%%USEARG=PopType]
-- match: '(#(?:var|con|type|label))(")'
+- match: '(#(?:var|con|type|label|frozen))(")'
   captures:
     1: keyword.directive.identifier.mcore
     2: string.quote.double.mcore

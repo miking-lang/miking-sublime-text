@@ -291,7 +291,7 @@ contexts:
       set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -320,7 +320,7 @@ contexts:
       set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breaktoplevel-or-utestusing, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel-or-utestusing, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -349,7 +349,7 @@ contexts:
       set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakrecbody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -378,7 +378,7 @@ contexts:
       set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breaktoprecbody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -407,7 +407,7 @@ contexts:
       set: [mexpr-pushed-breaktuple, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breaktuple, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breaktuple, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breaktuple, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -436,7 +436,7 @@ contexts:
       set: [mexpr-pushed-breakseq, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakseq, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakseq, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakseq, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -465,7 +465,7 @@ contexts:
       set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakrecordcontinued, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakrecordcontinued, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -494,7 +494,7 @@ contexts:
       set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakrecordwith, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -523,7 +523,7 @@ contexts:
       set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakrecordend, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakrecordend, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -552,7 +552,7 @@ contexts:
       set: [mexpr-pushed-breaksembody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breaksembody, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breaksembody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breaksembody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -581,7 +581,7 @@ contexts:
       set: [mexpr-pushed-breakin, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakin, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakin, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakin, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -610,7 +610,7 @@ contexts:
       set: [mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakin-or-utestusing, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakin-or-utestusing, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -639,7 +639,7 @@ contexts:
       set: [mexpr-pushed-breakthen, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakthen, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakthen, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakthen, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -668,7 +668,7 @@ contexts:
       set: [mexpr-pushed-breakelse, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakelse, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakelse, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakelse, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -697,7 +697,7 @@ contexts:
       set: [mexpr-pushed-breakwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
     - match: '\b(lam)\b'
       scope: keyword.other.lam.mcore
-      set: [mexpr-pushed-breakwith, optidenttype-pushed-breakdot, identifier-pushed]
+      set: [mexpr-pushed-breakwith, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
       set: [mexpr-pushed-breakwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
@@ -754,7 +754,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -824,7 +824,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -896,7 +896,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -969,7 +969,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1041,7 +1041,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecbody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1111,7 +1111,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecbody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1183,7 +1183,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1253,7 +1253,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktoprecbody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1325,7 +1325,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktuple]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1402,7 +1402,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaktuple]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1474,7 +1474,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakseq]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1551,7 +1551,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakseq]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1623,7 +1623,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1700,7 +1700,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordcontinued]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1772,7 +1772,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordwith]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1844,7 +1844,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordwith]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1916,7 +1916,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordend]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -1990,7 +1990,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakrecordend]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2062,7 +2062,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaksembody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2132,7 +2132,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breaksembody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2204,7 +2204,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2274,7 +2274,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2346,7 +2346,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin-or-utestusing]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2419,7 +2419,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakin-or-utestusing]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2491,7 +2491,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakthen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2561,7 +2561,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakthen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2633,7 +2633,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakelse]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2703,7 +2703,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakelse]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2775,7 +2775,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakwith]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -2845,7 +2845,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [atoms-pushed-optional-breakwith]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3328,6 +3328,29 @@ contexts:
     - include: top-lang-end-or-more-pushed
     - include: typeexpr-pushed-breaklang-end-or-more
 
+  optidentifier-pushed-breakdot:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+        5: support.type.conident.mcore
+      set: [optidenttype-pushed-breakdot]
+    - match: '(#(?:var|con|type|label|frozen))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [optidenttype-pushed-breakdot]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '[.]'
+      scope: keyword.other.lamdot.mcore
+      pop: true
+
   optidenttype-pushed-breakeq:
     - match: '(:)'
       scope: symbol.colon.mcore
@@ -3401,7 +3424,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrightarrow]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3474,7 +3497,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrightarrow]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3561,7 +3584,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakthen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3634,7 +3657,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakthen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3721,7 +3744,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakseq]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3796,7 +3819,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakseq]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3894,7 +3917,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breaktuple]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3969,7 +3992,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breaktuple]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -4067,7 +4090,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrecord]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -4142,7 +4165,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [pattern-pushed-concatseq-or-breakrecord]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -4251,7 +4274,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       set: [record-eqorwith-pushed]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -4310,7 +4333,7 @@ contexts:
         4: other.ident.mcore
         5: support.type.conident.mcore
       pop: true
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
