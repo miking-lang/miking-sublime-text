@@ -1,5 +1,8 @@
 %YAML 1.2
-#%%ARGS=(PopType)
+#%%ARGS=(PopType,Entrypoint)
+- match: '\b(all)\b'
+  scope: keyword.other.all.mcore
+  set: [%%%USEARG=Entrypoint, dot-pushed, identifier-pushed]
 - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
   captures:
     1: support.function.builtin.ident.mcore
@@ -9,7 +12,7 @@
     5: other.ident.mcore
     6: support.type.conident.mcore
   set: [%%%USEARG=PopType]
-- match: '(#(?:var|con|type|label))(")'
+- match: '(#(?:var|con|type|label|frozen))(")'
   captures:
     1: keyword.directive.identifier.mcore
     2: string.quote.double.mcore

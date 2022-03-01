@@ -90,14 +90,21 @@ def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
 					argconv[key] = value
 
 			else:
+				lineparts = []
 				m = p_usearg.search(line)
-				if m is not None:
+				while m is not None:
 					argname = m.group("name")
 					if argname not in argconv:
 						fragerror("Could not find argument")
 					
-					line = line.replace(m.group("full"), argconv[argname], 1)
-				
+					i = m.span("name")[1]
+					pre_m = line[:i]
+					line = line[i:]
+					lineparts.append(pre_m.replace(m.group("full"), argconv[argname], 1))
+					m = p_usearg.search(line)
+
+				lineparts.append(line)
+				line = "".join(lineparts)
 
 				# Check if replaced line is an import statement
 				m = p_import.match(line.strip())

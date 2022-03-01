@@ -7,7 +7,7 @@ scope: source.mcore
 
 variables:
   builtin_ident: '(?:unit|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
-  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case)'
+  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case|all)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
   ident: '(?:[a-z_][a-zA-Z_0-9]*)'
   conident: '(?:[A-Z][a-zA-Z_0-9]*)'
@@ -553,7 +553,7 @@ contexts:
   ###                  ###
   ### Note: The include at the end of each typeexpr case is to account for type application (e.g. Option a)
   typeexpr-pushed-breakrparen:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakrparen")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakrparen", "typeexpr-pushed-breakrparen")
   typeexpr-pushed-continuearrow-or-breakrparen:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -565,7 +565,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrparen
   typeexpr-pushed-breakeq:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakeq")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakeq", "typeexpr-pushed-breakeq")
   typeexpr-pushed-continuearrow-or-breakeq:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -575,7 +575,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakeq
   typeexpr-pushed-breakin:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakin")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakin", "typeexpr-pushed-breakin")
   typeexpr-pushed-continuearrow-or-breakin:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -585,7 +585,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakin
   typeexpr-pushed-breakdot:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakdot")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakdot", "typeexpr-pushed-breakdot")
   typeexpr-pushed-continuearrow-or-breakdot:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -595,7 +595,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakdot
   typeexpr-pushed-breakrsquare:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakrsquare")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breakrsquare", "typeexpr-pushed-breakrsquare")
   typeexpr-pushed-continuearrow-or-breakrsquare:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -607,7 +607,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrsquare
   typeexpr-pushed-breaktuple:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrparen")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrparen", "typeexpr-pushed-breaktuple")
   typeexpr-pushed-continuearrowcomma-or-breakrparen:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -622,7 +622,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breaktuple
   typeexpr-pushed-breakrecord:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrcurly")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrowcomma-or-breakrcurly", "typeexpr-pushed-breakrecord")
   typeexpr-pushed-continuearrowcomma-or-breakrcurly:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -637,7 +637,7 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrecord
   typeexpr-pushed-breaksynbody:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaksynbody")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaksynbody", "typeexpr-pushed-breaksynbody")
   typeexpr-pushed-continuearrow-or-breaksynbody:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -645,7 +645,7 @@ contexts:
     - include: top-lang-syn-body-pushed
     - include: typeexpr-pushed-breaksynbody
   typeexpr-pushed-breaktoplevel:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaktoplevel")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaktoplevel", "typeexpr-pushed-breaktoplevel")
   typeexpr-pushed-continuearrow-or-breaktoplevel:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -653,7 +653,7 @@ contexts:
     - include: top-level-pushed
     - include: typeexpr-pushed-breaktoplevel
   typeexpr-pushed-breaklang-end-or-more:
-    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaklang-end-or-more")
+    #%%IMPORT=c.typeexpr("typeexpr-pushed-continuearrow-or-breaklang-end-or-more", "typeexpr-pushed-breaklang-end-or-more")
   typeexpr-pushed-continuearrow-or-breaklang-end-or-more:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
@@ -966,6 +966,10 @@ contexts:
   colon-pushed:
     - match: '(:)'
       scope: symbol.colon.mcore
+      pop: true
+  dot-pushed:
+    - match: '(.)'
+      scope: symbol.dot.mcore
       pop: true
   rparen-pushed:
     - meta_include_prototype: false

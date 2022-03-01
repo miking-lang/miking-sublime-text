@@ -7,7 +7,7 @@ scope: source.mcore
 
 variables:
   builtin_ident: '(?:unit|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
-  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case)'
+  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case|all)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
   ident: '(?:[a-z_][a-zA-Z_0-9]*)'
   conident: '(?:[A-Z][a-zA-Z_0-9]*)'
@@ -3193,6 +3193,9 @@ contexts:
   ###                  ###
   ### Note: The include at the end of each typeexpr case is to account for type application (e.g. Option a)
   typeexpr-pushed-breakrparen:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakrparen, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3202,7 +3205,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakrparen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3238,6 +3241,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrparen
   typeexpr-pushed-breakeq:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakeq, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3247,7 +3253,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakeq]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3281,6 +3287,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakeq
   typeexpr-pushed-breakin:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakin, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3290,7 +3299,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakin]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3324,6 +3333,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakin
   typeexpr-pushed-breakdot:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakdot, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3333,7 +3345,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakdot]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3367,6 +3379,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakdot
   typeexpr-pushed-breakrsquare:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakrsquare, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3376,7 +3391,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breakrsquare]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3412,6 +3427,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrsquare
   typeexpr-pushed-breaktuple:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breaktuple, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3421,7 +3439,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrowcomma-or-breakrparen]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3460,6 +3478,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breaktuple
   typeexpr-pushed-breakrecord:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breakrecord, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3469,7 +3490,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrowcomma-or-breakrcurly]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3508,6 +3529,9 @@ contexts:
       pop: true
     - include: typeexpr-pushed-breakrecord
   typeexpr-pushed-breaksynbody:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breaksynbody, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3517,7 +3541,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breaksynbody]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3549,6 +3573,9 @@ contexts:
     - include: top-lang-syn-body-pushed
     - include: typeexpr-pushed-breaksynbody
   typeexpr-pushed-breaktoplevel:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breaktoplevel, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3558,7 +3585,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breaktoplevel]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -3590,6 +3617,9 @@ contexts:
     - include: top-level-pushed
     - include: typeexpr-pushed-breaktoplevel
   typeexpr-pushed-breaklang-end-or-more:
+    - match: '\b(all)\b'
+      scope: keyword.other.all.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more, dot-pushed, identifier-pushed]
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -3599,7 +3629,7 @@ contexts:
         5: other.ident.mcore
         6: support.type.conident.mcore
       set: [typeexpr-pushed-continuearrow-or-breaklang-end-or-more]
-    - match: '(#(?:var|con|type|label))(")'
+    - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
         1: keyword.directive.identifier.mcore
         2: string.quote.double.mcore
@@ -4828,6 +4858,10 @@ contexts:
   colon-pushed:
     - match: '(:)'
       scope: symbol.colon.mcore
+      pop: true
+  dot-pushed:
+    - match: '(.)'
+      scope: symbol.dot.mcore
       pop: true
   rparen-pushed:
     - meta_include_prototype: false

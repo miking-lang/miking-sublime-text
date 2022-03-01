@@ -1,6 +1,6 @@
 %YAML 1.2
-#%%ARGS=(BreakCheckName)
-#%%IMPORT=m.ident.type("%%%USEARG=BreakCheckName")
+#%%ARGS=(BreakCheckName,Entrypoint)
+#%%IMPORT=m.ident.type("%%%USEARG=BreakCheckName","%%%USEARG=Entrypoint")
 - match: '[(]\s*[)]'
   scope: constant.language.mcore
   set: [%%%USEARG=BreakCheckName]
