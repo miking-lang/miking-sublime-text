@@ -3,6 +3,9 @@
 - match: '\b(all)\b'
   scope: keyword.other.all.mcore
   set: [%%%USEARG=Entrypoint, dot-pushed, identifier-pushed]
+- match: '\b(Tensor)\b'
+  scope: keyword.directive.tensortype.mcore
+  set: [%%%USEARG=PopType, typeexpr-pushed-breakrsquare, lsquare-pushed]
 - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{type_ident}})|({{ident}}|({{conident}})))\b'
   captures:
     1: support.function.builtin.ident.mcore
