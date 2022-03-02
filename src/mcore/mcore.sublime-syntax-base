@@ -351,17 +351,22 @@ contexts:
   ###    (i.e. no mexpr in between)    ###
   ###                                  ###
   mexpr-pushed-breakcond-breaktoplevel:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel")
     - include: top-level-pushed
   mexpr-pushed-breakcond-breaktoplevel-or-utestusing:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel-or-utestusing")
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
       set: [mexpr-pushed-breaktoplevel]
   mexpr-pushed-breakcond-breakrecbody:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecbody")
     - include: recursive-body-pushed
   mexpr-pushed-breakcond-breaktoprecbody:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoprecbody")
     - include: top-recursive-body-pushed
   mexpr-pushed-breakcond-breaktuple:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktuple")
     - meta_include_prototype: false
     - include: prototype-ignore-rparen
     - match: '\)'
@@ -371,6 +376,7 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breaktuple]
   mexpr-pushed-breakcond-breakseq:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakseq")
     - meta_include_prototype: false
     - include: prototype-ignore-rsquare
     - match: '\]'
@@ -380,6 +386,7 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakseq]
   mexpr-pushed-breakcond-breakrecordcontinued:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordcontinued")
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
@@ -389,20 +396,25 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
   mexpr-pushed-breakcond-breakrecordwith:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordwith")
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
       set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
   mexpr-pushed-breakcond-breakrecordend:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordend")
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
   mexpr-pushed-breakcond-breaksembody:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaksembody")
     - include: top-lang-sem-body-pushed
   mexpr-pushed-breakcond-breakin:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin")
     - include: directive-in-pushed
   mexpr-pushed-breakcond-breakin-or-utestusing:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestusing")
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
@@ -412,12 +424,16 @@ contexts:
       scope: keyword.other.using.mcore
       set: [mexpr-pushed-breakin]
   mexpr-pushed-breakcond-breakthen:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakthen")
     - include: directive-then-pushed
   mexpr-pushed-breakcond-breakelse:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakelse")
     - include: directive-else-pushed
   mexpr-pushed-breakcond-breakwith:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakwith")
     - include: directive-with-pushed
   mexpr-pushed-breakcond-breakswitchcase:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakswitchcase")
     - match: '\b(case)\b'
       scope: keyword.other.case.mcore
       set: [mexpr-pushed-breakswitchcase, pattern-pushed-breakthen]
@@ -434,6 +450,7 @@ contexts:
     - include: top-level-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktoplevel")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel")
   atoms-pushed-breaktoplevel-or-utestusing:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel-or-utestusing")
   atoms-pushed-optional-breaktoplevel-or-utestusing:
@@ -443,18 +460,21 @@ contexts:
       set: [mexpr-pushed-breaktoplevel]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel-or-utestusing")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktoplevel-or-utestusing")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel-or-utestusing")
   atoms-pushed-breakrecbody:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecbody")
   atoms-pushed-optional-breakrecbody:
     - include: recursive-body-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecbody")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecbody")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecbody")
   atoms-pushed-breaktoprecbody:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoprecbody")
   atoms-pushed-optional-breaktoprecbody:
     - include: top-recursive-body-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoprecbody")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktoprecbody")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoprecbody")
   atoms-pushed-breaktuple:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktuple")
   atoms-pushed-optional-breaktuple:
@@ -468,6 +488,7 @@ contexts:
       set: [mexpr-pushed-breaktuple]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktuple")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktuple")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktuple")
   atoms-pushed-breakseq:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakseq")
   atoms-pushed-optional-breakseq:
@@ -481,6 +502,7 @@ contexts:
       set: [mexpr-pushed-breakseq]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakseq")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakseq")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakseq")
   atoms-pushed-breakrecordcontinued:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordcontinued")
   atoms-pushed-optional-breakrecordcontinued:
@@ -494,6 +516,7 @@ contexts:
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordcontinued")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecordcontinued")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordcontinued")
   atoms-pushed-breakrecordwith:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordwith")
   atoms-pushed-optional-breakrecordwith:
@@ -502,6 +525,7 @@ contexts:
       set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordwith")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecordwith")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordwith")
   atoms-pushed-breakrecordend:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordend")
   atoms-pushed-optional-breakrecordend:
@@ -512,18 +536,21 @@ contexts:
       pop: true
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordend")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecordend")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordend")
   atoms-pushed-breaksembody:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaksembody")
   atoms-pushed-optional-breaksembody:
     - include: top-lang-sem-body-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaksembody")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaksembody")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaksembody")
   atoms-pushed-breakin:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakin")
   atoms-pushed-optional-breakin:
     - include: directive-in-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakin")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakin")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin")
   atoms-pushed-breakin-or-utestusing:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakin-or-utestusing")
   atoms-pushed-optional-breakin-or-utestusing:
@@ -533,24 +560,28 @@ contexts:
       set: [mexpr-pushed-breakin]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakin-or-utestusing")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakin-or-utestusing")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestusing")
   atoms-pushed-breakthen:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakthen")
   atoms-pushed-optional-breakthen:
     - include: directive-then-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakthen")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakthen")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakthen")
   atoms-pushed-breakelse:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakelse")
   atoms-pushed-optional-breakelse:
     - include: directive-else-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakelse")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakelse")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakelse")
   atoms-pushed-breakwith:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakwith")
   atoms-pushed-optional-breakwith:
     - include: directive-with-pushed
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakwith")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakwith")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakwith")
   atoms-pushed-breakswitchcase:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakswitchcase")
   atoms-pushed-optional-breakswitchcase:
@@ -562,6 +593,7 @@ contexts:
       pop: true
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakswitchcase")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakswitchcase")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakswitchcase")
 
   ###                  ###
   ### Type Expressions ###

@@ -1,0 +1,5 @@
+%YAML 1.2
+#%%ARGS=(Continuation)
+- match: '(;)'
+  scope: symbol.semicolon.mcore
+  set: [%%%USEARG=Continuation]

@@ -863,17 +863,32 @@ contexts:
   ###    (i.e. no mexpr in between)    ###
   ###                                  ###
   mexpr-pushed-breakcond-breaktoplevel:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoplevel]
     - include: top-level-pushed
   mexpr-pushed-breakcond-breaktoplevel-or-utestusing:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoplevel-or-utestusing]
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
       set: [mexpr-pushed-breaktoplevel]
   mexpr-pushed-breakcond-breakrecbody:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecbody]
     - include: recursive-body-pushed
   mexpr-pushed-breakcond-breaktoprecbody:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoprecbody]
     - include: top-recursive-body-pushed
   mexpr-pushed-breakcond-breaktuple:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktuple]
     - meta_include_prototype: false
     - include: prototype-ignore-rparen
     - match: '\)'
@@ -883,6 +898,9 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breaktuple]
   mexpr-pushed-breakcond-breakseq:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakseq]
     - meta_include_prototype: false
     - include: prototype-ignore-rsquare
     - match: '\]'
@@ -892,6 +910,9 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakseq]
   mexpr-pushed-breakcond-breakrecordcontinued:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordcontinued]
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
@@ -901,20 +922,35 @@ contexts:
       scope: symbol.comma.mcore
       set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
   mexpr-pushed-breakcond-breakrecordwith:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordwith]
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
       set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
   mexpr-pushed-breakcond-breakrecordend:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordend]
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
   mexpr-pushed-breakcond-breaksembody:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaksembody]
     - include: top-lang-sem-body-pushed
   mexpr-pushed-breakcond-breakin:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakin]
     - include: directive-in-pushed
   mexpr-pushed-breakcond-breakin-or-utestusing:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakin-or-utestusing]
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
@@ -924,12 +960,24 @@ contexts:
       scope: keyword.other.using.mcore
       set: [mexpr-pushed-breakin]
   mexpr-pushed-breakcond-breakthen:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakthen]
     - include: directive-then-pushed
   mexpr-pushed-breakcond-breakelse:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakelse]
     - include: directive-else-pushed
   mexpr-pushed-breakcond-breakwith:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakwith]
     - include: directive-with-pushed
   mexpr-pushed-breakcond-breakswitchcase:
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakswitchcase]
     - match: '\b(case)\b'
       scope: keyword.other.case.mcore
       set: [mexpr-pushed-breakswitchcase, pattern-pushed-breakthen]
@@ -1082,6 +1130,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breaktoplevel, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoplevel]
   atoms-pushed-breaktoplevel-or-utestusing:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1227,6 +1278,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoplevel-or-utestusing]
   atoms-pushed-breakrecbody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1369,6 +1423,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakrecbody, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecbody]
   atoms-pushed-breaktoprecbody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1511,6 +1568,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breaktoprecbody, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktoprecbody]
   atoms-pushed-breaktuple:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1660,6 +1720,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breaktuple, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaktuple]
   atoms-pushed-breakseq:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1809,6 +1872,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakseq, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakseq]
   atoms-pushed-breakrecordcontinued:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -1958,6 +2024,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakrecordcontinued, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordcontinued]
   atoms-pushed-breakrecordwith:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2102,6 +2171,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakrecordwith, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordwith]
   atoms-pushed-breakrecordend:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2248,6 +2320,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakrecordend, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakrecordend]
   atoms-pushed-breaksembody:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2390,6 +2465,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breaksembody, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breaksembody]
   atoms-pushed-breakin:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2532,6 +2610,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakin, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakin]
   atoms-pushed-breakin-or-utestusing:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2677,6 +2758,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakin-or-utestusing, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakin-or-utestusing]
   atoms-pushed-breakthen:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2819,6 +2903,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakthen, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakthen]
   atoms-pushed-breakelse:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -2961,6 +3048,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakelse, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakelse]
   atoms-pushed-breakwith:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -3103,6 +3193,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakwith, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakwith]
   atoms-pushed-breakswitchcase:
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
@@ -3250,6 +3343,9 @@ contexts:
     - match: '[.]'
       scope: symbol.dot.mcore
       set: [atoms-pushed-optional-breakswitchcase, record-proj-label-pushed]
+    - match: '(;)'
+      scope: symbol.semicolon.mcore
+      set: [mexpr-pushed-breakswitchcase]
 
   ###                  ###
   ### Type Expressions ###
