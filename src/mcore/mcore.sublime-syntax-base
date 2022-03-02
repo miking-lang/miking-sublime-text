@@ -7,7 +7,7 @@ scope: source.mcore
 
 variables:
   builtin_ident: '(?:unit|addi|subi|muli|divi|modi|negi|lti|leqi|gti|geqi|eqi|neqi|slli|srli|srai|arity|addf|subf|mulf|divf|negf|ltf|leqf|gtf|geqf|eqf|neqf|char2int|int2char|int2float|string2float|length|concat|reverse|splitAt|makeSeq|cons|snoc|get|set|print|dprint|argv|readFile|writeFile|fileExists|deleteFile|error|floorfi|ceilfi|roundfi)'
-  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case|all)'
+  reserved_ident: '(?:if|then|else|match|with|let|recursive|utest|lam|lang|syn|sem|con|type|use|in|using|end|mexpr|never|switch|case|all|external)'
   type_ident: '(?:Dyn|Bool|Int|Float|Char|String)'
   ident: '(?:[a-z_][a-zA-Z_0-9]*)'
   conident: '(?:[A-Z][a-zA-Z_0-9]*)'
@@ -47,6 +47,7 @@ contexts:
     - include: top-con
     - include: top-type
     - include: top-utest
+    - include: top-external
     - include: top-mexpr
 
   top-level-pushed:
@@ -57,6 +58,7 @@ contexts:
     - include: top-con-pushed
     - include: top-type-pushed
     - include: top-utest-pushed
+    - include: top-external-pushed
     - include: top-mexpr-pushed
 
   ###          ###
@@ -265,6 +267,19 @@ contexts:
     - match: '\b(utest)\b'
       scope: keyword.directive.utest.mcore
       set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakwith]
+
+  ###                                ###
+  ### Top-Level External Expressions ###
+  ###                                ###
+  top-external:
+    - match: '\b(external)\b'
+      scope: keyword.directive.external.mcore
+      push: [typeexpr-pushed-breaktoplevel, optbang-colon-pushed, identifier-pushed]
+
+  top-external-pushed:
+    - match: '\b(external)\b'
+      scope: keyword.directive.external.mcore
+      set: [typeexpr-pushed-breaktoplevel, optbang-colon-pushed, identifier-pushed]
 
   ###                             ###
   ### Top-Level MExpr Expressions ###
@@ -981,6 +996,11 @@ contexts:
     - match: '(->)'
       scope: keyword.operator.right-arrow.mcore
       pop: true
+  optbang-colon-pushed:
+    - match: '(!)'
+      scope: symbol.bang.mcore
+      set: [colon-pushed]
+    - include: colon-pushed
   directive-in-pushed:
     - match: '\b(in)\b'
       scope: keyword.other.in.mcore
