@@ -346,6 +346,13 @@ contexts:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakswitchcase", "mexpr-pushed-breakcond-breakswitchcase")
     - include: atoms-pushed-breakswitchcase
 
+  ###                                              ###
+  ### MExpr That Does Not Start With An Identifier ###
+  ###                                              ###
+  mexpr-noident-pushed-breakrecordwith:
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordwith", "mexpr-pushed-breakcond-breakrecordwith")
+    - include: atoms-noident-pushed-breakrecordwith
+
   ###                                  ###
   ### MExpr Immediate Break Conditions ###
   ###    (i.e. no mexpr in between)    ###
@@ -606,6 +613,12 @@ contexts:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakswitchcase")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakswitchcase")
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakswitchcase")
+
+  ###                                                    ###
+  ### MExpr Atoms That Does Not Start With An Identifier ###
+  ###                                                    ###
+  atoms-noident-pushed-breakrecordwith:
+    #%%IMPORT=c.atoms.noident("atoms-pushed-optional-breakrecordwith")
 
   ###                  ###
   ### Type Expressions ###
@@ -970,21 +983,19 @@ contexts:
   ### Record Body ###
   ###             ###
   record-entry-pushed:
-    #%%IMPORT=m.ident("record-eqorwith-pushed")
     - meta_include_prototype: false
     - include: prototype-ignore-rcurly
     - match: '\}'
       scope: symbol.rcurly.mcore
       pop: true
-    - include: mexpr-pushed-breakrecordwith
+    - include: mexpr-noident-pushed-breakrecordwith
+    #%%IMPORT=m.ident("record-eqorwith-pushed")
 
   record-eqorwith-pushed:
-    - match: '\b(with)\b'
-      scope: keyword.other.with.mcore
-      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [mexpr-pushed-breakrecordcontinued]
+    - include: atoms-pushed-optional-breakrecordwith
 
   record-proj-label-pushed:
     - include: identifier-pushed

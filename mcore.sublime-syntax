@@ -858,6 +858,45 @@ contexts:
       set: [mexpr-pushed-breakswitchcase, typeexpr-pushed-breakin, optbang-colon-pushed, identifier-pushed]
     - include: atoms-pushed-breakswitchcase
 
+  ###                                              ###
+  ### MExpr That Does Not Start With An Identifier ###
+  ###                                              ###
+  mexpr-noident-pushed-breakrecordwith:
+    - match: '\b(con)\b'
+      scope: keyword.other.con.mcore
+      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakin, identifier-pushed]
+    - match: '\b(if)\b'
+      scope: keyword.other.if.mcore
+      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
+    - match: '\b(lam)\b'
+      scope: keyword.other.lam.mcore
+      set: [mexpr-pushed-breakrecordwith, optidentifier-pushed-breakdot]
+    - match: '\b(let)\b'
+      scope: keyword.other.let.mcore
+      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+    - match: '\b(match)\b'
+      scope: keyword.other.match.mcore
+      set: [mexpr-pushed-breakrecordwith, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
+    - match: '\b(switch)\b'
+      scope: keyword.other.switch.mcore
+      set: [mexpr-pushed-breakcond-breakrecordwith, mexpr-pushed-breakswitchcase]
+    - match: '\b(recursive)\b'
+      scope: keyword.other.recursive.mcore
+      set: [mexpr-pushed-breakrecordwith, recursive-body-pushed]
+    - match: '\b(type)\b'
+      scope: keyword.other.type.mcore
+      set: [mexpr-pushed-breakrecordwith, opttypetype-pushed-breakin, identifier-pushed]
+    - match: '\b(use)\b'
+      scope: keyword.other.use.mcore
+      set: [mexpr-pushed-breakrecordwith, directive-in-pushed, identifier-pushed]
+    - match: '\b(utest)\b'
+      scope: keyword.other.utest.mcore
+      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakwith]
+    - match: '\b(external)\b'
+      scope: keyword.other.external.mcore
+      set: [mexpr-pushed-breakrecordwith, typeexpr-pushed-breakin, optbang-colon-pushed, identifier-pushed]
+    - include: atoms-noident-pushed-breakrecordwith
+
   ###                                  ###
   ### MExpr Immediate Break Conditions ###
   ###    (i.e. no mexpr in between)    ###
@@ -3359,6 +3398,61 @@ contexts:
       scope: symbol.semicolon.mcore
       set: [mexpr-pushed-breakswitchcase]
 
+  ###                                                    ###
+  ### MExpr Atoms That Does Not Start With An Identifier ###
+  ###                                                    ###
+  atoms-noident-pushed-breakrecordwith:
+    - match: '[(]\s*[)]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '[{]\s*[}]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '\[\s*\]'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '\b(true|false)\b'
+      scope: constant.language.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '\b(never)\b'
+      scope: keyword.other.never.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '(-)?[0-9]+([.][0-9]*)?(e|E)(\+|-)?[0-9]+'
+      scope: constant.numeric.float.stdform.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '(-)?[0-9]+[.]([0-9])*'
+      scope: constant.numeric.float.normal.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '(-)?[0-9]+'
+      scope: constant.numeric.integer.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '(")'
+      scope: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [atoms-pushed-optional-breakrecordwith]
+        - include: stringsymbol
+        - meta_include_prototype: false
+    - match: '('')({{escapechar}})('')'
+      captures:
+        1: string.quote.single.mcore
+        2: constant.character.escape.mcore
+        3: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '('')([^''\\])('')'
+      scope: string.quote.single.mcore
+      set: [atoms-pushed-optional-breakrecordwith]
+    - match: '\('
+      scope: symbol.lparen.mcore
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
+    - match: '\['
+      scope: symbol.lsquare.mcore
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
+    - match: '\{'
+      scope: symbol.lcurly.mcore
+      set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]
+
   ###                  ###
   ### Type Expressions ###
   ###                  ###
@@ -4963,6 +5057,12 @@ contexts:
   ### Record Body ###
   ###             ###
   record-entry-pushed:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rcurly
+    - match: '\}'
+      scope: symbol.rcurly.mcore
+      pop: true
+    - include: mexpr-noident-pushed-breakrecordwith
     - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
       captures:
         1: support.function.builtin.ident.mcore
@@ -4981,20 +5081,12 @@ contexts:
           set: [record-eqorwith-pushed]
         - include: stringsymbol
         - meta_include_prototype: false
-    - meta_include_prototype: false
-    - include: prototype-ignore-rcurly
-    - match: '\}'
-      scope: symbol.rcurly.mcore
-      pop: true
-    - include: mexpr-pushed-breakrecordwith
 
   record-eqorwith-pushed:
-    - match: '\b(with)\b'
-      scope: keyword.other.with.mcore
-      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [mexpr-pushed-breakrecordcontinued]
+    - include: atoms-pushed-optional-breakrecordwith
 
   record-proj-label-pushed:
     - include: identifier-pushed
