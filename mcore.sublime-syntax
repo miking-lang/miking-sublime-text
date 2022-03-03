@@ -896,7 +896,13 @@ contexts:
       pop: true
     - match: '[,]'
       scope: symbol.comma.mcore
-      set: [mexpr-pushed-breaktuple]
+      set:
+        - meta_include_prototype: false
+        - include: prototype-ignore-rparen
+        - match: '\)'
+          scope: symbol.rparen.mcore
+          pop: true
+        - include: mexpr-pushed-breaktuple
   mexpr-pushed-breakcond-breakseq:
     - match: '(;)'
       scope: symbol.semicolon.mcore
@@ -1648,7 +1654,13 @@ contexts:
       pop: true
     - match: '[,]'
       scope: symbol.comma.mcore
-      set: [mexpr-pushed-breaktuple]
+      set:
+        - meta_include_prototype: false
+        - include: prototype-ignore-rparen
+        - match: '\)'
+          scope: symbol.rparen.mcore
+          pop: true
+        - include: mexpr-pushed-breaktuple
     - match: '[(]\s*[)]'
       scope: constant.language.mcore
       set: [atoms-pushed-optional-breaktuple]

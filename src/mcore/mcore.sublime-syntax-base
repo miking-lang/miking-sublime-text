@@ -374,7 +374,13 @@ contexts:
       pop: true
     - match: '[,]'
       scope: symbol.comma.mcore
-      set: [mexpr-pushed-breaktuple]
+      set:
+        - meta_include_prototype: false
+        - include: prototype-ignore-rparen
+        - match: '\)'
+          scope: symbol.rparen.mcore
+          pop: true
+        - include: mexpr-pushed-breaktuple
   mexpr-pushed-breakcond-breakseq:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakseq")
     - meta_include_prototype: false
@@ -485,7 +491,13 @@ contexts:
       pop: true
     - match: '[,]'
       scope: symbol.comma.mcore
-      set: [mexpr-pushed-breaktuple]
+      set:
+        - meta_include_prototype: false
+        - include: prototype-ignore-rparen
+        - match: '\)'
+          scope: symbol.rparen.mcore
+          pop: true
+        - include: mexpr-pushed-breaktuple
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktuple")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktuple")
     #%%IMPORT=c.mexprseq("mexpr-pushed-breaktuple")
