@@ -1,12 +1,12 @@
 %YAML 1.2
-#%%ARGS=(PopType)
+#%%ARGS=(PopType,IdentCapture="other.ident.mcore",TyIdentCapture="support.type.conident.mcore")
 - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
   captures:
     1: support.function.builtin.ident.mcore
     2: invalid.illegal.reserved.ident.mcore
     3: keyword.other.ignored.ident.mcore
-    4: other.ident.mcore
-    5: support.type.conident.mcore
+    4: %%%USEARG=IdentCapture
+    5: %%%USEARG=TyIdentCapture
   set: [%%%USEARG=PopType]
 - match: '(#(?:var|con|type|label|frozen))(")'
   captures:

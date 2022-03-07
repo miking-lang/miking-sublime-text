@@ -8,8 +8,8 @@ import sys
 import tempfile
 
 p_templatefname = regex.compile(r"(?P<filename>(?P<name>\w+)[.]sublime-syntax-base)")
-p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[-a-zA-Z.]+)[(]\s*(?:\"(?P<args>[^\"]*)\"\s*(?:[,]\s*\"(?P<args>[^\"]+)\"\s*)*)?[)])")
-p_args = regex.compile(r"(?P<full>#%%ARGS=[(](?:(?P<args>[-a-zA-Z]+)(?:[,](?P<args>[-a-zA-Z]+))*)?[)])")
+p_import = regex.compile(r"(?P<full>#%%IMPORT=(?P<fragment>[-a-zA-Z.]+)[(]\s*(?:(?P<args>(?:[-a-zA-Z]+[=])?\"[^\"]*\")\s*(?:[,]\s*(?P<args>(?:[-a-zA-Z]+[=])?\"[^\"]*\")\s*)*)?[)])")
+p_args = regex.compile(r"(?P<full>#%%ARGS=[(](?:(?P<args>[-a-zA-Z]+(?:[=]\"[^\"]*\")?)(?:[,](?P<args>[-a-zA-Z]+(?:[=]\"[^\"]*\")?))*)?[)])")
 p_usearg = regex.compile(r"(?P<full>(#|%)%%USEARG=(?P<name>[-a-zA-Z]+))")
 
 def main(args):
@@ -53,14 +53,23 @@ def scan_template(outfile, langdir, filename):
 			if m is not None:
 				indent = line.find(m.group("full"))
 				fragfilename = m.group("fragment") + ".fragment"
-				fragargs = m.captures("args")
+				frag_args = []
+				frag_kwargs = dict()
+				for fragarg in m.captures("args"):
+					eqidx = fragarg.find("=")
+					if eqidx >= 0:
+						key = fragarg[:eqidx]
+						value = fragarg[eqidx+1:].replace("\"", "")
+						frag_kwargs[key] = value
+					else:
+						frag_args.append(fragarg.replace("\"", ""))
 
-				scan_fragment(outfile, langdir, fragfilename, fragargs, [fragfilename], indent)
+				scan_fragment(outfile, langdir, fragfilename, frag_args, frag_kwargs, [fragfilename], indent)
 			else:
 				outfile.write(line)
 
 # Scan a *.fragment file
-def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
+def scan_fragment(outfile, langdir, filename, args=[], kwargs=dict(), scanned=[], indent=0):
 	filepath = os.path.join(langdir, filename)
 
 	with open(filepath, "r") as f:
@@ -83,11 +92,33 @@ def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
 				if m is None:
 					fragerror("Second line does not specify fragment arguments")
 
-				if len(m.captures("args")) != len(args):
-					fragerror("Mismatched amount of arguments")
+				if len(args) > len(m.captures("args")):
+					fragerror("Too many arguments provided")
 
-				for key,value in zip(m.captures("args"), args):
+				ordered_keys = []
+				for argdef in m.captures("args"):
+					eqidx = argdef.find("=")
+					if eqidx >= 0:
+						key = argdef[:eqidx]
+						default = argdef[eqidx+1:].replace("\"", "")
+					else:
+						key = argdef
+						default = None
+					argconv[key] = default
+					ordered_keys.append(key)
+
+				for key,value in zip(ordered_keys[:len(args)], args):
 					argconv[key] = value
+
+				for key,value in kwargs.items():
+					if key not in argconv:
+						fragerror(f"Unknown argument provided \"{key}\"")
+					else:
+						argconv[key] = value
+
+				for key,value in argconv.items():
+					if value is None:
+						fragerror(f"No value provided for argument \"{key}\"")
 
 			else:
 				lineparts = []
@@ -111,12 +142,21 @@ def scan_fragment(outfile, langdir, filename, args=[], scanned=[], indent=0):
 				if m is not None:
 					imp_indent = line.find(m.group("full"))
 					imp_name = m.group("fragment") + ".fragment"
-					imp_args = m.captures("args")
+					imp_args = []
+					imp_kwargs = dict()
+					for imparg in m.captures("args"):
+						eqidx = imparg.find("=")
+						if eqidx >= 0:
+							key = imparg[:eqidx]
+							value = imparg[eqidx+1:].replace("\"", "")
+							imp_kwargs[key] = value
+						else:
+							imp_args.append(imparg.replace("\"", ""))
 
 					if imp_name in scanned:
 						fragerror("Import loop detected:" + (" -> ".join(scanned + [imp_name])))
 
-					scan_fragment(outfile, langdir, imp_name, imp_args, scanned + [imp_name], indent + imp_indent)
+					scan_fragment(outfile, langdir, imp_name, imp_args, imp_kwargs, scanned + [imp_name], indent + imp_indent)
 				else:
 					line = (" " * indent) + line + "\n"
 					outfile.write(line)

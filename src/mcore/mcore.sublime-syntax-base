@@ -201,12 +201,12 @@ contexts:
   top-let:
     - match: '\b(let)\b'
       scope: keyword.directive.let.mcore
-      push: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+      push: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-letdef-pushed]
 
   top-let-pushed:
     - match: '\b(let)\b'
       scope: keyword.directive.let.mcore
-      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-letdef-pushed]
 
   ###                                 ###
   ### Top-Level Recursive Expressions ###
@@ -224,7 +224,7 @@ contexts:
   top-recursive-body-pushed:
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(end)\b'
       scope: keyword.directive.end.mcore
       pop: true
@@ -235,12 +235,12 @@ contexts:
   top-con:
     - match: '\b(con)\b'
       scope: keyword.directive.con.mcore
-      push: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+      push: [optidenttype-pushed-breaktoplevel, identifier-condef-pushed]
 
   top-con-pushed:
     - match: '\b(con)\b'
       scope: keyword.directive.con.mcore
-      set: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+      set: [optidenttype-pushed-breaktoplevel, identifier-condef-pushed]
 
   ###                            ###
   ### Top-Level Type Expressions ###
@@ -248,12 +248,12 @@ contexts:
   top-type:
     - match: '\b(type)\b'
       scope: keyword.directive.type.mcore
-      push: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+      push: [opttypetype-pushed-breaktoplevel, identifier-condef-pushed]
 
   top-type-pushed:
     - match: '\b(type)\b'
       scope: keyword.directive.type.mcore
-      set: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+      set: [opttypetype-pushed-breaktoplevel, identifier-condef-pushed]
 
   ###                             ###
   ### Top-Level UTest Expressions ###
@@ -1023,6 +1023,10 @@ contexts:
   ###                   ###
   identifier-pushed:
     #%%IMPORT=m.ident("")
+  identifier-letdef-pushed:
+    #%%IMPORT=m.ident("",IdentCapture="entity.name.let.mcore")
+  identifier-condef-pushed:
+    #%%IMPORT=m.ident("",TyIdentCapture="entity.name.con.mcore")
 
   ###                ###
   ### Integer Tokens ###

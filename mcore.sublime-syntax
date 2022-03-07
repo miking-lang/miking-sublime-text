@@ -201,12 +201,12 @@ contexts:
   top-let:
     - match: '\b(let)\b'
       scope: keyword.directive.let.mcore
-      push: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+      push: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-letdef-pushed]
 
   top-let-pushed:
     - match: '\b(let)\b'
       scope: keyword.directive.let.mcore
-      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakeq, identifier-letdef-pushed]
 
   ###                                 ###
   ### Top-Level Recursive Expressions ###
@@ -224,7 +224,7 @@ contexts:
   top-recursive-body-pushed:
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(end)\b'
       scope: keyword.directive.end.mcore
       pop: true
@@ -235,12 +235,12 @@ contexts:
   top-con:
     - match: '\b(con)\b'
       scope: keyword.directive.con.mcore
-      push: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+      push: [optidenttype-pushed-breaktoplevel, identifier-condef-pushed]
 
   top-con-pushed:
     - match: '\b(con)\b'
       scope: keyword.directive.con.mcore
-      set: [optidenttype-pushed-breaktoplevel, identifier-pushed]
+      set: [optidenttype-pushed-breaktoplevel, identifier-condef-pushed]
 
   ###                            ###
   ### Top-Level Type Expressions ###
@@ -248,12 +248,12 @@ contexts:
   top-type:
     - match: '\b(type)\b'
       scope: keyword.directive.type.mcore
-      push: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+      push: [opttypetype-pushed-breaktoplevel, identifier-condef-pushed]
 
   top-type-pushed:
     - match: '\b(type)\b'
       scope: keyword.directive.type.mcore
-      set: [opttypetype-pushed-breaktoplevel, identifier-pushed]
+      set: [opttypetype-pushed-breaktoplevel, identifier-condef-pushed]
 
   ###                             ###
   ### Top-Level UTest Expressions ###
@@ -300,7 +300,7 @@ contexts:
   mexpr-pushed-breaktoplevel:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -309,7 +309,7 @@ contexts:
       set: [mexpr-pushed-breaktoplevel, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breaktoplevel, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -335,7 +335,7 @@ contexts:
   mexpr-pushed-breaktoplevel-or-utestusing:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breaktoplevel-or-utestusing, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel-or-utestusing, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -344,7 +344,7 @@ contexts:
       set: [mexpr-pushed-breaktoplevel-or-utestusing, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoplevel-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breaktoplevel-or-utestusing, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -370,7 +370,7 @@ contexts:
   mexpr-pushed-breakrecbody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -379,7 +379,7 @@ contexts:
       set: [mexpr-pushed-breakrecbody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakrecbody, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -405,7 +405,7 @@ contexts:
   mexpr-pushed-breaktoprecbody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breaktoprecbody, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -414,7 +414,7 @@ contexts:
       set: [mexpr-pushed-breaktoprecbody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktoprecbody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breaktoprecbody, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -440,7 +440,7 @@ contexts:
   mexpr-pushed-breaktuple:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breaktuple, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breaktuple, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breaktuple, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -449,7 +449,7 @@ contexts:
       set: [mexpr-pushed-breaktuple, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaktuple, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaktuple, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breaktuple, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -475,7 +475,7 @@ contexts:
   mexpr-pushed-breakseq:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakseq, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakseq, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakseq, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -484,7 +484,7 @@ contexts:
       set: [mexpr-pushed-breakseq, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakseq, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakseq, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakseq, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -510,7 +510,7 @@ contexts:
   mexpr-pushed-breakrecordcontinued:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakrecordcontinued, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakrecordcontinued, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -519,7 +519,7 @@ contexts:
       set: [mexpr-pushed-breakrecordcontinued, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecordcontinued, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakrecordcontinued, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -545,7 +545,7 @@ contexts:
   mexpr-pushed-breakrecordwith:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -554,7 +554,7 @@ contexts:
       set: [mexpr-pushed-breakrecordwith, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakrecordwith, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -580,7 +580,7 @@ contexts:
   mexpr-pushed-breakrecordend:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakrecordend, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakrecordend, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -589,7 +589,7 @@ contexts:
       set: [mexpr-pushed-breakrecordend, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecordend, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakrecordend, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -615,7 +615,7 @@ contexts:
   mexpr-pushed-breaksembody:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breaksembody, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breaksembody, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breaksembody, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -624,7 +624,7 @@ contexts:
       set: [mexpr-pushed-breaksembody, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breaksembody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breaksembody, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breaksembody, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -650,7 +650,7 @@ contexts:
   mexpr-pushed-breakin:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakin, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakin, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakin, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -659,7 +659,7 @@ contexts:
       set: [mexpr-pushed-breakin, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakin, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakin, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakin, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -685,7 +685,7 @@ contexts:
   mexpr-pushed-breakin-or-utestusing:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakin-or-utestusing, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakin-or-utestusing, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -694,7 +694,7 @@ contexts:
       set: [mexpr-pushed-breakin-or-utestusing, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakin-or-utestusing, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakin-or-utestusing, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -720,7 +720,7 @@ contexts:
   mexpr-pushed-breakthen:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakthen, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakthen, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakthen, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -729,7 +729,7 @@ contexts:
       set: [mexpr-pushed-breakthen, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakthen, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakthen, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakthen, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -755,7 +755,7 @@ contexts:
   mexpr-pushed-breakelse:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakelse, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakelse, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakelse, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -764,7 +764,7 @@ contexts:
       set: [mexpr-pushed-breakelse, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakelse, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakelse, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakelse, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -790,7 +790,7 @@ contexts:
   mexpr-pushed-breakwith:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakwith, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakwith, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -799,7 +799,7 @@ contexts:
       set: [mexpr-pushed-breakwith, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakwith, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -825,7 +825,7 @@ contexts:
   mexpr-pushed-breakswitchcase:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakswitchcase, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakswitchcase, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakswitchcase, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -834,7 +834,7 @@ contexts:
       set: [mexpr-pushed-breakswitchcase, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakswitchcase, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakswitchcase, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakswitchcase, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -864,7 +864,7 @@ contexts:
   mexpr-noident-pushed-breakrecordwith:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
-      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakin, identifier-pushed]
+      set: [mexpr-pushed-breakrecordwith, optidenttype-pushed-breakin, identifier-condef-pushed]
     - match: '\b(if)\b'
       scope: keyword.other.if.mcore
       set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -873,7 +873,7 @@ contexts:
       set: [mexpr-pushed-breakrecordwith, optidentifier-pushed-breakdot]
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecordwith, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
     - match: '\b(match)\b'
       scope: keyword.other.match.mcore
       set: [mexpr-pushed-breakrecordwith, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -5127,6 +5127,44 @@ contexts:
         3: keyword.other.ignored.ident.mcore
         4: other.ident.mcore
         5: support.type.conident.mcore
+      pop: true
+    - match: '(#(?:var|con|type|label|frozen))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+        - meta_include_prototype: false
+  identifier-letdef-pushed:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: entity.name.let.mcore
+        5: support.type.conident.mcore
+      pop: true
+    - match: '(#(?:var|con|type|label|frozen))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          pop: true
+        - include: stringsymbol
+        - meta_include_prototype: false
+  identifier-condef-pushed:
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+        5: entity.name.con.mcore
       pop: true
     - match: '(#(?:var|con|type|label|frozen))(")'
       captures:
