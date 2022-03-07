@@ -131,12 +131,12 @@ contexts:
   top-lang:
     - match: '\b(lang)\b'
       scope: keyword.directive.lang.mcore
-      push: [top-lang-entry-pushed, identifier-typedef-pushed]
+      push: [top-lang-entry-pushed, identifier-classdef-pushed]
 
   top-lang-pushed:
     - match: '\b(lang)\b'
       scope: keyword.directive.lang.mcore
-      set: [top-lang-entry-pushed, identifier-typedef-pushed]
+      set: [top-lang-entry-pushed, identifier-classdef-pushed]
 
   top-lang-entry-pushed:
       # Check what comes after 'lang'
@@ -163,18 +163,18 @@ contexts:
   top-lang-syn-entry-pushed:
     - match: '\b(syn)\b'
       scope: keyword.other.syn.mcore
-      set: [top-lang-syn-body-pushed, eqoperator-pushed, identifier-pushed]
+      set: [top-lang-syn-body-pushed, eqoperator-pushed, identifier-typedef-pushed]
 
   top-lang-syn-body-pushed:
     - match: '(\|)'
       scope: keyword.operator.case.mcore
-      set: [typeexpr-pushed-breaksynbody, identifier-pushed]
+      set: [typeexpr-pushed-breaksynbody, identifier-typedef-pushed]
     - include: top-lang-end-or-more-pushed
 
   top-lang-sem-entry-pushed:
     - match: '\b(sem)\b'
       scope: keyword.other.sem.mcore
-      set: [top-lang-sem-preamble-pushed, identifier-pushed]
+      set: [top-lang-sem-preamble-pushed, identifier-funcdef-pushed]
 
   top-lang-sem-preamble-pushed:
     - match: '(=)'
@@ -193,7 +193,7 @@ contexts:
   top-lang-type-entry-pushed:
     - match: '\b(type)\b'
       scope: keyword.other.type.mcore
-      set: [typeexpr-pushed-breaklang-end-or-more, eqoperator-pushed, identifier-pushed]
+      set: [typeexpr-pushed-breaklang-end-or-more, eqoperator-pushed, identifier-typedef-pushed]
 
   ###                           ###
   ### Top-Level Let Expressions ###
@@ -1027,6 +1027,8 @@ contexts:
     #%%IMPORT=m.ident("",IdentCapture="entity.name.function.mcore")
   identifier-typedef-pushed:
     #%%IMPORT=m.ident("",TyIdentCapture="entity.name.type.mcore")
+  identifier-classdef-pushed:
+    #%%IMPORT=m.ident("",TyIdentCapture="entity.name.class.mcore")
 
   ###                ###
   ### Integer Tokens ###
