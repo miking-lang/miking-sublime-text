@@ -4837,14 +4837,20 @@ contexts:
     - include: prototype-ignore-rparen
     - include: pattern-pushed-breaktuple-cond
   pattern-pushed-breaktuple-cond:
-    - match: '[,]'
-      scope: symbol.comma.mcore
-      set: [pattern-pushed-breaktuple]
     - meta_include_prototype: false
     - include: prototype-ignore-rparen
     - match: '\)'
       scope: symbol.rparen.mcore
       pop: true
+    - match: '[,]'
+      scope: symbol.comma.mcore
+      set:
+        - meta_include_prototype: false
+        - include: prototype-ignore-rparen
+        - match: '\)'
+          scope: symbol.rparen.mcore
+          pop: true
+        - include: pattern-pushed-breaktuple
     - match: '(\|)'
       scope: keyword.operator.or.mcore
       set: [pattern-pushed-breaktuple]
