@@ -2,7 +2,7 @@
 #%%ARGS=(ThisName,BreakName)
 - match: '\b(con)\b'
   scope: keyword.other.con.mcore
-  set: [%%%USEARG=ThisName, optidenttype-pushed-breakin, identifier-condef-pushed]
+  set: [%%%USEARG=ThisName, optidenttype-pushed-breakin, identifier-typedef-pushed]
 - match: '\b(if)\b'
   scope: keyword.other.if.mcore
   set: [%%%USEARG=ThisName, mexpr-pushed-breakelse, mexpr-pushed-breakthen]
@@ -11,7 +11,7 @@
   set: [%%%USEARG=ThisName, optidentifier-pushed-breakdot]
 - match: '\b(let)\b'
   scope: keyword.other.let.mcore
-  set: [%%%USEARG=ThisName, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-letdef-pushed]
+  set: [%%%USEARG=ThisName, mexpr-pushed-breakin, optidenttype-pushed-breakeq, identifier-funcdef-pushed]
 - match: '\b(match)\b'
   scope: keyword.other.match.mcore
   set: [%%%USEARG=ThisName, pattern-pushed-breakwhich-then-or-in, mexpr-pushed-breakwith]
@@ -23,7 +23,7 @@
   set: [%%%USEARG=ThisName, recursive-body-pushed]
 - match: '\b(type)\b'
   scope: keyword.other.type.mcore
-  set: [%%%USEARG=ThisName, opttypetype-pushed-breakin, identifier-pushed]
+  set: [%%%USEARG=ThisName, opttypetype-pushed-breakin, identifier-typedef-pushed]
 - match: '\b(use)\b'
   scope: keyword.other.use.mcore
   set: [%%%USEARG=ThisName, directive-in-pushed, identifier-pushed]
