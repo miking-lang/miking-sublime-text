@@ -180,9 +180,25 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [top-lang-sem-body-pushed]
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more]
+    - include: top-lang-sem-typed-identifiers-pushed
+    - include: top-lang-sem-typeless-identifiers-pushed
+
+  top-lang-sem-typed-identifiers-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-sem-body-pushed]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [top-lang-sem-preamble-pushed, typeexpr-pushed-breakrparen, colon-pushed, identifier-pushed]
+      set: [top-lang-sem-typed-identifiers-pushed, typeexpr-pushed-breakrparen, colon-pushed, identifier-pushed]
+
+  top-lang-sem-typeless-identifiers-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-sem-body-pushed]
+    #%%IMPORT=m.ident("top-lang-sem-typeless-identifiers-pushed")
 
   top-lang-sem-body-pushed:
     - match: '(\|)'
@@ -980,7 +996,7 @@ contexts:
   recursive-body-pushed:
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakeq, identifier-funcdef-pushed]
     - match: '\b(in)\b'
       scope: keyword.other.in.mcore
       pop: true

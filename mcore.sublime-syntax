@@ -180,9 +180,42 @@ contexts:
     - match: '(=)'
       scope: keyword.operator.assignment.mcore
       set: [top-lang-sem-body-pushed]
+    - match: '(:)'
+      scope: symbol.colon.mcore
+      set: [typeexpr-pushed-breaklang-end-or-more]
+    - include: top-lang-sem-typed-identifiers-pushed
+    - include: top-lang-sem-typeless-identifiers-pushed
+
+  top-lang-sem-typed-identifiers-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-sem-body-pushed]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [top-lang-sem-preamble-pushed, typeexpr-pushed-breakrparen, colon-pushed, identifier-pushed]
+      set: [top-lang-sem-typed-identifiers-pushed, typeexpr-pushed-breakrparen, colon-pushed, identifier-pushed]
+
+  top-lang-sem-typeless-identifiers-pushed:
+    - match: '(=)'
+      scope: keyword.operator.assignment.mcore
+      set: [top-lang-sem-body-pushed]
+    - match: '\b(?:({{builtin_ident}})|({{reserved_ident}})|(_)|({{ident}})|({{conident}}))\b'
+      captures:
+        1: support.function.builtin.ident.mcore
+        2: invalid.illegal.reserved.ident.mcore
+        3: keyword.other.ignored.ident.mcore
+        4: other.ident.mcore
+        5: support.type.conident.mcore
+      set: [top-lang-sem-typeless-identifiers-pushed]
+    - match: '(#(?:var|con|type|label|frozen))(")'
+      captures:
+        1: keyword.directive.identifier.mcore
+        2: string.quote.double.mcore
+      set:
+        - match: '(")'
+          scope: string.quote.double.mcore
+          set: [top-lang-sem-typeless-identifiers-pushed]
+        - include: stringsymbol
+        - meta_include_prototype: false
 
   top-lang-sem-body-pushed:
     - match: '(\|)'
@@ -5054,7 +5087,7 @@ contexts:
   recursive-body-pushed:
     - match: '\b(let)\b'
       scope: keyword.other.let.mcore
-      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakeq, identifier-pushed]
+      set: [mexpr-pushed-breakrecbody, optidenttype-pushed-breakeq, identifier-funcdef-pushed]
     - match: '\b(in)\b'
       scope: keyword.other.in.mcore
       pop: true
