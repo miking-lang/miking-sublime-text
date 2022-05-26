@@ -337,9 +337,6 @@ contexts:
   mexpr-pushed-breakrecordwith:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordwith", "mexpr-pushed-breakcond-breakrecordwith")
     - include: atoms-pushed-breakrecordwith
-  mexpr-pushed-breakrecordend:
-    #%%IMPORT=c.mexpr("mexpr-pushed-breakrecordend", "mexpr-pushed-breakcond-breakrecordend")
-    - include: atoms-pushed-breakrecordend
   mexpr-pushed-breaksembody:
     #%%IMPORT=c.mexpr("mexpr-pushed-breaksembody", "mexpr-pushed-breakcond-breaksembody")
     - include: atoms-pushed-breaksembody
@@ -428,14 +425,7 @@ contexts:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordwith")
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
-      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
-  mexpr-pushed-breakcond-breakrecordend:
-    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordend")
-    - meta_include_prototype: false
-    - include: prototype-ignore-rcurly
-    - match: '\}'
-      scope: symbol.rcurly.mcore
-      pop: true
+      set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
   mexpr-pushed-breakcond-breaksembody:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breaksembody")
     - include: top-lang-sem-body-pushed
@@ -557,21 +547,10 @@ contexts:
   atoms-pushed-optional-breakrecordwith:
     - match: '\b(with)\b'
       scope: keyword.other.with.mcore
-      set: [mexpr-pushed-breakrecordend, eqoperator-pushed, identifier-pushed]
+      set: [mexpr-pushed-breakrecordcontinued, eqoperator-pushed, identifier-pushed]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordwith")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecordwith")
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordwith")
-  atoms-pushed-breakrecordend:
-    #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordend")
-  atoms-pushed-optional-breakrecordend:
-    - meta_include_prototype: false
-    - include: prototype-ignore-rcurly
-    - match: '\}'
-      scope: symbol.rcurly.mcore
-      pop: true
-    #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecordend")
-    #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakrecordend")
-    #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecordend")
   atoms-pushed-breaksembody:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaksembody")
   atoms-pushed-optional-breaksembody:
