@@ -505,6 +505,13 @@ contexts:
       scope: keyword.other.external.mcore
       set: [mexpr-pushed-breaktoprecbody, typeexpr-pushed-breakin, optbang-colon-pushed, identifier-pushed]
     - include: atoms-pushed-breaktoprecbody
+  mexpr-pushed-breaktuple-or-immediate:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - include: mexpr-pushed-breaktuple
   mexpr-pushed-breaktuple:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -540,6 +547,13 @@ contexts:
       scope: keyword.other.external.mcore
       set: [mexpr-pushed-breaktuple, typeexpr-pushed-breakin, optbang-colon-pushed, identifier-pushed]
     - include: atoms-pushed-breaktuple
+  mexpr-pushed-breakseq-or-immediate:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+    - include: mexpr-pushed-breakseq
   mexpr-pushed-breakseq:
     - match: '\b(con)\b'
       scope: keyword.other.con.mcore
@@ -1166,10 +1180,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel, record-entry-pushed]
@@ -1236,10 +1250,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel, record-entry-pushed]
@@ -1311,10 +1325,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing, record-entry-pushed]
@@ -1384,10 +1398,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestusing, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestusing, record-entry-pushed]
@@ -1459,10 +1473,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel-or-utestelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestelse, record-entry-pushed]
@@ -1532,10 +1546,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoplevel-or-utestelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoplevel-or-utestelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoplevel-or-utestelse, record-entry-pushed]
@@ -1607,10 +1621,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecbody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecbody, record-entry-pushed]
@@ -1677,10 +1691,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecbody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecbody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecbody, record-entry-pushed]
@@ -1752,10 +1766,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoprecbody, record-entry-pushed]
@@ -1822,10 +1836,10 @@ contexts:
       set: [atoms-pushed-optional-breaktoprecbody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktoprecbody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktoprecbody, record-entry-pushed]
@@ -1897,10 +1911,10 @@ contexts:
       set: [atoms-pushed-optional-breaktuple]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktuple, record-entry-pushed]
@@ -1980,10 +1994,10 @@ contexts:
       set: [atoms-pushed-optional-breaktuple]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaktuple, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaktuple, record-entry-pushed]
@@ -2055,10 +2069,10 @@ contexts:
       set: [atoms-pushed-optional-breakseq]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakseq, record-entry-pushed]
@@ -2132,10 +2146,10 @@ contexts:
       set: [atoms-pushed-optional-breakseq]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakseq, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakseq, record-entry-pushed]
@@ -2207,10 +2221,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecordcontinued, record-entry-pushed]
@@ -2284,10 +2298,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecordcontinued]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordcontinued, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecordcontinued, record-entry-pushed]
@@ -2359,10 +2373,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecordwith]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]
@@ -2431,10 +2445,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecordwith]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]
@@ -2506,10 +2520,10 @@ contexts:
       set: [atoms-pushed-optional-breaksembody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaksembody, record-entry-pushed]
@@ -2576,10 +2590,10 @@ contexts:
       set: [atoms-pushed-optional-breaksembody]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breaksembody, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breaksembody, record-entry-pushed]
@@ -2651,10 +2665,10 @@ contexts:
       set: [atoms-pushed-optional-breakin]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin, record-entry-pushed]
@@ -2721,10 +2735,10 @@ contexts:
       set: [atoms-pushed-optional-breakin]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin, record-entry-pushed]
@@ -2796,10 +2810,10 @@ contexts:
       set: [atoms-pushed-optional-breakin-or-utestusing]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin-or-utestusing, record-entry-pushed]
@@ -2869,10 +2883,10 @@ contexts:
       set: [atoms-pushed-optional-breakin-or-utestusing]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin-or-utestusing, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin-or-utestusing, record-entry-pushed]
@@ -2944,10 +2958,10 @@ contexts:
       set: [atoms-pushed-optional-breakin-or-utestelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin-or-utestelse, record-entry-pushed]
@@ -3017,10 +3031,10 @@ contexts:
       set: [atoms-pushed-optional-breakin-or-utestelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakin-or-utestelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakin-or-utestelse, record-entry-pushed]
@@ -3092,10 +3106,10 @@ contexts:
       set: [atoms-pushed-optional-breakthen]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakthen, record-entry-pushed]
@@ -3162,10 +3176,10 @@ contexts:
       set: [atoms-pushed-optional-breakthen]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakthen, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakthen, record-entry-pushed]
@@ -3237,10 +3251,10 @@ contexts:
       set: [atoms-pushed-optional-breakelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakelse, record-entry-pushed]
@@ -3307,10 +3321,10 @@ contexts:
       set: [atoms-pushed-optional-breakelse]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakelse, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakelse, record-entry-pushed]
@@ -3382,10 +3396,10 @@ contexts:
       set: [atoms-pushed-optional-breakwith]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakwith, record-entry-pushed]
@@ -3452,10 +3466,10 @@ contexts:
       set: [atoms-pushed-optional-breakwith]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakwith, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakwith, record-entry-pushed]
@@ -3527,10 +3541,10 @@ contexts:
       set: [atoms-pushed-optional-breakswitchcase]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakswitchcase, record-entry-pushed]
@@ -3602,10 +3616,10 @@ contexts:
       set: [atoms-pushed-optional-breakswitchcase]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakswitchcase, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakswitchcase, record-entry-pushed]
@@ -3663,10 +3677,10 @@ contexts:
       set: [atoms-pushed-optional-breakrecordwith]
     - match: '\('
       scope: symbol.lparen.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breaktuple-or-immediate]
     - match: '\['
       scope: symbol.lsquare.mcore
-      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq]
+      set: [atoms-pushed-optional-breakrecordwith, mexpr-pushed-breakseq-or-immediate]
     - match: '\{'
       scope: symbol.lcurly.mcore
       set: [atoms-pushed-optional-breakrecordwith, record-entry-pushed]

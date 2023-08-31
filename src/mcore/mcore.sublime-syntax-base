@@ -328,9 +328,23 @@ contexts:
   mexpr-pushed-breaktoprecbody:
     #%%IMPORT=c.mexpr("mexpr-pushed-breaktoprecbody", "mexpr-pushed-breakcond-breaktoprecbody")
     - include: atoms-pushed-breaktoprecbody
+  mexpr-pushed-breaktuple-or-immediate:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rparen
+    - match: '\)'
+      scope: symbol.rparen.mcore
+      pop: true
+    - include: mexpr-pushed-breaktuple
   mexpr-pushed-breaktuple:
     #%%IMPORT=c.mexpr("mexpr-pushed-breaktuple", "mexpr-pushed-breakcond-breaktuple")
     - include: atoms-pushed-breaktuple
+  mexpr-pushed-breakseq-or-immediate:
+    - meta_include_prototype: false
+    - include: prototype-ignore-rsquare
+    - match: '\]'
+      scope: symbol.rsquare.mcore
+      pop: true
+    - include: mexpr-pushed-breakseq
   mexpr-pushed-breakseq:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakseq", "mexpr-pushed-breakcond-breakseq")
     - include: atoms-pushed-breakseq

@@ -21,10 +21,10 @@
 #%%IMPORT=m.char("%%%USEARG=PopType")
 - match: '\('
   scope: symbol.lparen.mcore
-  set: [%%%USEARG=PopType, mexpr-pushed-breaktuple]
+  set: [%%%USEARG=PopType, mexpr-pushed-breaktuple-or-immediate]
 - match: '\['
   scope: symbol.lsquare.mcore
-  set: [%%%USEARG=PopType, mexpr-pushed-breakseq]
+  set: [%%%USEARG=PopType, mexpr-pushed-breakseq-or-immediate]
 - match: '\{'
   scope: symbol.lcurly.mcore
   set: [%%%USEARG=PopType, record-entry-pushed]
