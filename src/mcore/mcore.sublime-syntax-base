@@ -319,6 +319,9 @@ contexts:
   mexpr-pushed-breaktoplevel-or-utestusing:
     #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel-or-utestusing", "mexpr-pushed-breakcond-breaktoplevel-or-utestusing")
     - include: atoms-pushed-breaktoplevel-or-utestusing
+  mexpr-pushed-breaktoplevel-or-utestelse:
+    #%%IMPORT=c.mexpr("mexpr-pushed-breaktoplevel-or-utestelse", "mexpr-pushed-breakcond-breaktoplevel-or-utestelse")
+    - include: atoms-pushed-breaktoplevel-or-utestelse
   mexpr-pushed-breakrecbody:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakrecbody", "mexpr-pushed-breakcond-breakrecbody")
     - include: atoms-pushed-breakrecbody
@@ -346,6 +349,9 @@ contexts:
   mexpr-pushed-breakin-or-utestusing:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakin-or-utestusing", "mexpr-pushed-breakcond-breakin-or-utestusing")
     - include: atoms-pushed-breakin-or-utestusing
+  mexpr-pushed-breakin-or-utestelse:
+    #%%IMPORT=c.mexpr("mexpr-pushed-breakin-or-utestelse", "mexpr-pushed-breakcond-breakin-or-utestelse")
+    - include: atoms-pushed-breakin-or-utestelse
   mexpr-pushed-breakthen:
     #%%IMPORT=c.mexpr("mexpr-pushed-breakthen", "mexpr-pushed-breakcond-breakthen")
     - include: atoms-pushed-breakthen
@@ -378,6 +384,12 @@ contexts:
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
+      set: [mexpr-pushed-breakcond-breaktoplevel-or-utestelse]
+  mexpr-pushed-breakcond-breaktoplevel-or-utestelse:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel-or-utestelse")
+    - include: top-level-pushed
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
       set: [mexpr-pushed-breaktoplevel]
   mexpr-pushed-breakcond-breakrecbody:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakrecbody")
@@ -434,13 +446,15 @@ contexts:
     - include: directive-in-pushed
   mexpr-pushed-breakcond-breakin-or-utestusing:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestusing")
-    - include: top-level-pushed
-    - match: '\b(using)\b'
-      scope: keyword.other.using.mcore
-      set: [mexpr-pushed-breaktoplevel]
     - include: directive-in-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
+      set: [mexpr-pushed-breakcond-breakin-or-utestelse]
+  mexpr-pushed-breakcond-breakin-or-utestelse:
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestelse")
+    - include: directive-in-pushed
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
       set: [mexpr-pushed-breakin]
   mexpr-pushed-breakcond-breakthen:
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakthen")
@@ -476,10 +490,20 @@ contexts:
     - include: top-level-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
-      set: [mexpr-pushed-breaktoplevel]
+      set: [mexpr-pushed-breaktoplevel-or-utestelse]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel-or-utestusing")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktoplevel-or-utestusing")
     #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel-or-utestusing")
+  atoms-pushed-breaktoplevel-or-utestelse:
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel-or-utestelse")
+  atoms-pushed-optional-breaktoplevel-or-utestelse:
+    - include: top-level-pushed
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
+      set: [mexpr-pushed-breaktoplevel]
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breaktoplevel-or-utestelse")
+    #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breaktoplevel-or-utestelse")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breaktoplevel-or-utestelse")
   atoms-pushed-breakrecbody:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakrecbody")
   atoms-pushed-optional-breakrecbody:
@@ -571,10 +595,20 @@ contexts:
     - include: directive-in-pushed
     - match: '\b(using)\b'
       scope: keyword.other.using.mcore
-      set: [mexpr-pushed-breakin]
+      set: [mexpr-pushed-breakin-or-utestelse]
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakin-or-utestusing")
     #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakin-or-utestusing")
     #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestusing")
+  atoms-pushed-breakin-or-utestelse:
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breakin-or-utestelse")
+  atoms-pushed-optional-breakin-or-utestelse:
+    - include: directive-in-pushed
+    - match: '\b(else)\b'
+      scope: keyword.other.else.mcore
+      set: [mexpr-pushed-breakin]
+    #%%IMPORT=c.atoms("atoms-pushed-optional-breakin-or-utestelse")
+    #%%IMPORT=c.atoms.nonfst("atoms-pushed-optional-breakin-or-utestelse")
+    #%%IMPORT=c.mexprseq("mexpr-pushed-breakin-or-utestelse")
   atoms-pushed-breakthen:
     #%%IMPORT=c.atoms("atoms-pushed-optional-breakthen")
   atoms-pushed-optional-breakthen:
